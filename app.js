@@ -512,7 +512,7 @@ function startEditExpense(exp) {
   state.editingExpId = exp.id;
 
   // Pre-fill form fields
-  document.getElementById('exp-date').value     = exp.date;
+  document.getElementById('exp-date').value     = normalizeExpDate(exp.date);
   document.getElementById('exp-currency').value = exp.currency;
   document.getElementById('exp-desc').value     = exp.desc;
   document.getElementById('exp-amount').value   = exp.amount;
@@ -588,6 +588,15 @@ function renderExpenses() {
   renderSettlement();
 }
 
+// Normalize expense date to "5/21" format regardless of how it was stored
+function normalizeExpDate(d) {
+  if (!d) return '';
+  if (/^\d+\/\d+$/.test(String(d))) return String(d);   // already "5/21"
+  const dt = new Date(d);
+  if (!isNaN(dt.getTime())) return `${dt.getMonth() + 1}/${dt.getDate()}`;
+  return String(d);
+}
+
 function renderExpenseList() {
   const daysEl  = document.getElementById('expense-days');
   const noEl    = document.getElementById('no-expenses');
@@ -607,8 +616,9 @@ function renderExpenseList() {
 
   const grouped = {};
   state.expenses.forEach(e => {
-    if (!grouped[e.date]) grouped[e.date] = [];
-    grouped[e.date].push(e);
+    const key = normalizeExpDate(e.date);
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push({ ...e, _normDate: key });
   });
 
   let totals = { RM: 0, TWD: 0 };
