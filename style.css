@@ -246,6 +246,12 @@ ul { list-style: none; }
   font-weight: 600;
   line-height: 1.4;
 }
+.timeline-name-en {
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 1px;
+  font-style: italic;
+}
 .timeline-note {
   font-size: 12px;
   color: var(--text-2);
@@ -319,11 +325,17 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 .option-item.selected .option-dot { background: var(--success); }
+.option-info { flex: 1; min-width: 0; }
 .option-name {
-  flex: 1;
   font-size: 13px;
   color: var(--text);
   line-height: 1.4;
+}
+.option-name-en {
+  font-size: 10px;
+  color: var(--text-3);
+  font-style: italic;
+  margin-top: 1px;
 }
 .option-item.selected .option-name { font-weight: 600; color: var(--success); }
 .option-actions { display: flex; gap: 6px; align-items: center; }
@@ -372,6 +384,7 @@ ul { list-style: none; }
 .place-card:active { box-shadow: var(--shadow-md); }
 .place-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .place-card-name { font-size: 15px; font-weight: 700; line-height: 1.3; }
+.place-card-name-en { font-size: 11px; color: var(--text-3); font-style: italic; margin-top: 2px; }
 .place-city-tag {
   font-size: 11px;
   background: var(--primary-light);

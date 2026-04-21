@@ -159,17 +159,20 @@ function renderDayTimeline(day, container) {
 
 function renderSingleItem(item) {
   const key = item.placeKey;
-  const hasPlace = key && state.places[key];
+  const place = key && state.places[key];
+  const nameEN = place && place.nameEN
+    ? `<div class="timeline-name-en">${place.nameEN}</div>` : '';
   return `
     <div class="timeline-dot"></div>
     <div class="timeline-card">
       <div class="timeline-main">
-        <div class="timeline-time">${item.time}</div>
+        <div class="timeline-time">${item.time || '—'}</div>
         <div class="timeline-info">
           <div class="timeline-name">${item.name}</div>
+          ${nameEN}
           ${item.note ? `<div class="timeline-note">${item.note}</div>` : ''}
           ${item.mapsUrl ? `<a href="${item.mapsUrl}" target="_blank" rel="noopener" class="timeline-link-btn">📍 地圖</a>` : ''}
-          ${hasPlace ? `<button class="timeline-link-btn" data-place="${key}">查看詳情 →</button>` : ''}
+          ${place ? `<button class="timeline-link-btn" data-place="${key}">查看詳情 →</button>` : ''}
         </div>
       </div>
     </div>`;
@@ -182,14 +185,19 @@ function renderMultiItem(item, slotKey) {
   const optionsHtml = (item.options || []).map((opt, i) => {
     const isSel = selectedIdx === i;
     const key = opt.placeKey;
-    const hasPlace = key && state.places[key];
+    const place = key && state.places[key];
+    const nameEN = place && place.nameEN
+      ? `<div class="option-name-en">${place.nameEN}</div>` : '';
     return `
       <div class="option-item${isSel ? ' selected' : ''}">
         <div class="option-dot"></div>
-        <div class="option-name">${opt.name}</div>
+        <div class="option-info">
+          <div class="option-name">${opt.name}</div>
+          ${nameEN}
+        </div>
         <div class="option-actions">
           ${opt.mapsUrl ? `<a href="${opt.mapsUrl}" target="_blank" rel="noopener" class="btn-view-place">📍</a>` : ''}
-          ${hasPlace ? `<button class="btn-view-place" data-place="${key}">詳情</button>` : ''}
+          ${place ? `<button class="btn-view-place" data-place="${key}">詳情</button>` : ''}
           <button class="btn-select${isSel ? ' selected' : ''}" data-opt-idx="${i}">
             ${isSel ? '✓ 選定' : '選定'}
           </button>
@@ -289,7 +297,10 @@ function createPlaceCard(place) {
   const tagBadge = place.tag ? `<span class="place-tag">${place.tag}</span>` : '';
   card.innerHTML = `
     <div class="place-card-header">
-      <div class="place-card-name">${place.name}${tagBadge}</div>
+      <div>
+        <div class="place-card-name">${place.name}${tagBadge}</div>
+        ${place.nameEN ? `<div class="place-card-name-en">${place.nameEN}</div>` : ''}
+      </div>
       <div class="place-city-tag ${cityClass}">${place.city || ''}</div>
     </div>
     ${place.address ? `<div class="place-address">📌 ${place.address}</div>` : ''}
