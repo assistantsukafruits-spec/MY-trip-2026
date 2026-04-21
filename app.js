@@ -623,12 +623,11 @@ function renderExpenseList() {
 
   let totals = { RM: 0, TWD: 0 };
 
-  DATE_ORDER.forEach(date => {
+  const buildGroup = (date, label) => {
     if (!grouped[date]) return;
     const grp = document.createElement('div');
     grp.className = 'expense-day-group';
-    grp.innerHTML = `<div class="expense-day-label">📅 ${date}（${WEEKDAYS[date] || ''}）</div>`;
-
+    grp.innerHTML = `<div class="expense-day-label">📅 ${label}</div>`;
     grouped[date].forEach(exp => {
       totals[exp.currency] = (totals[exp.currency] || 0) + exp.amount;
       const isEditing = state.editingExpId === exp.id;
@@ -639,8 +638,8 @@ function renderExpenseList() {
           <div class="expense-desc">${exp.desc}</div>
           <div class="expense-right">
             <span class="expense-amount">${exp.currency} ${exp.amount.toFixed(2)}</span>
-            <button class="btn-edit-expense" title="編輯">✏️</button>
-            <button class="btn-delete-expense" title="刪除">🗑️</button>
+            <button class="btn-edit-expense" title="編輯"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487z"/><line x1="4" y1="22" x2="20" y2="22"/></svg></button>
+            <button class="btn-delete-expense" title="刪除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></button>
           </div>
         </div>
         <div class="expense-meta">💳 <strong>${exp.paidBy}</strong> 付款 &nbsp;|&nbsp; ${exp.splitAmong.length} 人</div>`;
@@ -651,6 +650,13 @@ function renderExpenseList() {
       grp.appendChild(row);
     });
     daysEl.appendChild(grp);
+  };
+
+  DATE_ORDER.forEach(date => buildGroup(date, `${date}（${WEEKDAYS[date] || ''}）`));
+
+  // 顯示非標準日期（如「其他」）
+  Object.keys(grouped).filter(k => !DATE_ORDER.includes(k)).forEach(date => {
+    buildGroup(date, date === 'other' ? '其他' : date);
   });
 
   const parts = [];

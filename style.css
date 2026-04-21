@@ -735,7 +735,7 @@ ul { list-style: none; }
   background: var(--surface);
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow);
-  padding: 10px 12px;
+  padding: 8px 10px;
   margin-bottom: 6px;
   display: flex;
   flex-direction: column;
@@ -753,33 +753,40 @@ ul { list-style: none; }
   justify-content: space-between;
   gap: 8px;
 }
-.expense-desc { font-size: 14px; font-weight: 600; flex: 1; min-width: 0; }
+.expense-desc { font-size: 12px; font-weight: 600; flex: 1; min-width: 0; }
 .expense-right {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   flex-shrink: 0;
 }
-.expense-amount { font-size: 14px; font-weight: 700; color: var(--text); }
-.expense-meta { font-size: 11px; color: var(--text-2); margin-top: 2px; }
+.expense-amount { font-size: 12px; font-weight: 700; color: var(--text); }
+.expense-meta { font-size: 10px; color: var(--text-2); margin-top: 2px; }
 .btn-edit-expense,
 .btn-delete-expense {
-  width: 28px;
-  height: 28px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   border: none;
   background: transparent;
-  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background .15s;
   flex-shrink: 0;
+  color: var(--text-3);
 }
+.btn-edit-expense svg,
+.btn-delete-expense svg { width: 14px; height: 14px; }
 .btn-edit-expense:active,
-.btn-edit-expense:hover  { background: var(--primary-light); }
+.btn-edit-expense:hover  { background: var(--primary-light); color: var(--primary-dark); }
 .btn-delete-expense:active,
-.btn-delete-expense:hover { background: var(--danger-light); }
+.btn-delete-expense:hover { background: var(--danger-light); color: var(--danger); }
+.section-divider {
+  margin: 4px 16px 12px;
+  border: none;
+  border-top: 2px solid var(--border);
+}
 .btn-cancel-expense {
   font-size: 12px;
   font-weight: 600;
