@@ -263,50 +263,40 @@ function setupMultiItemEvents(el, item, slotKey, day) {
 // Places
 // ============================================================
 function renderPlaces(filter = '') {
-  const itinEl = document.getElementById('cards-itinerary');
   const optEl  = document.getElementById('cards-optional');
-  const itinSec = document.getElementById('places-itinerary');
-  const optSec  = document.getElementById('places-optional');
-  if (!itinEl || !optEl) return;
+  const optSec = document.getElementById('places-optional');
+  if (!optEl) return;
 
-  itinEl.innerHTML = '';
-  optEl.innerHTML  = '';
+  optEl.innerHTML = '';
 
   const q = filter.trim().toLowerCase();
-  const itin = [], opt = [];
+  const opt = [];
 
   Object.entries(state.places).forEach(([key, p]) => {
+    if (p.category !== 'optional') return;
     if (q) {
-      const hay = `${p.name}${p.intro}${p.city}${p.tag || ''}`.toLowerCase();
+      const hay = `${p.name}${p.intro || ''}${p.tag || ''}`.toLowerCase();
       if (!hay.includes(q)) return;
     }
-    if (p.category === 'itinerary') itin.push({ key, ...p });
-    else opt.push({ key, ...p });
+    opt.push({ key, ...p });
   });
 
-  itin.forEach(p => itinEl.appendChild(createPlaceCard(p)));
-  opt.forEach(p  => optEl.appendChild(createPlaceCard(p)));
-
-  if (itinSec) itinSec.style.display = itin.length ? '' : 'none';
-  if (optSec)  optSec.style.display  = opt.length  ? '' : 'none';
+  opt.forEach(p => optEl.appendChild(createPlaceCard(p)));
+  if (optSec) optSec.style.display = opt.length ? '' : 'none';
 }
 
 function createPlaceCard(place) {
   const card = document.createElement('div');
   card.className = 'place-card';
-  const cityClass = (place.city || '').includes('吉隆坡') || (place.city || '').includes('KL') ? 'kl' : '';
   const tagBadge = place.tag ? `<span class="place-tag">${place.tag}</span>` : '';
   card.innerHTML = `
-    <div class="place-card-header">
-      <div>
-        <div class="place-card-name">${place.name}${tagBadge}</div>
-        ${place.nameEN ? `<div class="place-card-name-en">${place.nameEN}</div>` : ''}
-      </div>
-      <div class="place-city-tag ${cityClass}">${place.city || ''}</div>
-    </div>
+    <div class="place-card-name">${place.name}${tagBadge}</div>
+    ${place.nameEN ? `<div class="place-card-name-en">${place.nameEN}</div>` : ''}
     ${place.address ? `<div class="place-address">📌 ${place.address}</div>` : ''}
-    ${place.intro ? `<div class="place-intro-preview">${place.intro}</div>` : ''}`;
-  card.addEventListener('click', () => openPlaceModal(place.key));
+    ${place.intro ? `<div class="place-intro">${place.intro}</div>` : ''}
+    <a href="${place.mapsUrl}" target="_blank" rel="noopener" class="place-map-btn">
+      🗺️ 在 Google Maps 開啟導航
+    </a>`;
   return card;
 }
 

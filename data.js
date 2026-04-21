@@ -287,13 +287,15 @@ function parseOptionalPlacesCSV(csvText) {
 
     if (!nameCN) continue;
     const key = slugify(nameCN);
+    const enrich = PLACE_ENRICHMENT[nameCN] || {};
     places[key] = {
       name: nameCN,
-      nameEN,
+      nameEN:  nameEN  || enrich.nameEN  || '',
       city: '檳城',
-      address: area,
-      intro: intro || tag,
-      mapsUrl: mapsUrl || `https://maps.google.com/?q=${encodeURIComponent(nameCN + ' Penang')}`,
+      address: area    || enrich.address || '',
+      intro:   enrich.intro || intro || tag,
+      mapsUrl: mapsUrl || enrich.mapsUrl
+            || `https://maps.google.com/?q=${encodeURIComponent(nameCN + ' Penang')}`,
       category: 'optional',
       tag
     };
@@ -556,6 +558,140 @@ const PLACE_ENRICHMENT = {
   'Gurney Plaza': {
     nameEN: 'Gurney Plaza Shopping Mall',
     intro: '關仔角（Gurney Drive）旁的大型購物商場，是檳城購物與娛樂的重要地標，設有百貨、超市、電影院與各式餐廳。緊鄰海濱小食中心，逛街與吃小吃可一次完成，是下午消暑購物的熱門去處。'
+  },
+
+  // ── 檳城：文青選物 ──────────────────────────────────────────
+  '遺產貓': {
+    nameEN: 'The Heritage Cat',
+    address: 'Lebuh Armenian, George Town',
+    intro: '以檳城街貓為主題的特色選物店，將喬治市街頭隨處可見的流浪貓形象化作插畫、手作商品與明信片，成為喬治市最具辨識度的在地品牌之一。店內商品融合傳統南洋美學與現代插畫風格，是尋找有溫度的在地紀念品的必訪之地。',
+    mapsUrl: 'https://maps.google.com/?q=The+Heritage+Cat+George+Town+Penang'
+  },
+  '本土幻想': {
+    nameEN: 'Local Dream',
+    address: 'George Town, Penang',
+    intro: '以馬來西亞在地文化為靈感的創意選物店，販售本土設計師設計的文具、布袋、服飾與生活器物，每件商品都承載著對這片土地的詮釋與想像。比起量產的觀光紀念品，這裡更像是一個讓旅人真正帶走「一片馬來西亞」的地方。',
+    mapsUrl: 'https://maps.google.com/?q=Local+Dream+George+Town+Penang'
+  },
+  '第六感': {
+    nameEN: 'Sixth Sense',
+    address: 'George Town, Penang',
+    intro: '藏身喬治市老街的生活風格選品店，集結本地設計師作品，涵蓋家居小物、陶瓷器皿、文創印刷品與服飾配件。店內選品強調在地製造與手工質感，是喬治市設計創作力的縮影，也是淘出獨一無二紀念品的好地方。',
+    mapsUrl: 'https://maps.google.com/?q=Sixth+Sense+George+Town+Penang'
+  },
+  '檳城之好': {
+    nameEN: 'Penang Good',
+    address: 'George Town, Penang',
+    intro: '以「展示最好的檳城」為理念的策展型選物店，從手工食品、在地醬料、特色零食到設計文具，每樣商品都經嚴選，代表著檳城最值得帶走的那一份好。對想一次打包最道地伴手禮的旅人而言，這裡是最省力也最有誠意的選擇。',
+    mapsUrl: 'https://maps.google.com/?q=Penang+Good+George+Town'
+  },
+  '潮人居': {
+    nameEN: 'Chaoren Ju / Trendy Studio',
+    address: 'George Town, Penang',
+    intro: '結合娘惹復古美學與現代潮流設計的生活選物空間，販售印有喬治市街景、老招牌與多元文化元素的服飾、帆布包與印刷品。走進店裡，彷彿看見檳城老靈魂穿上了新衣裳，散發出獨特的南洋文青氣息。',
+    mapsUrl: 'https://maps.google.com/?q=潮人居+George+Town+Penang'
+  },
+  '義香餅店': {
+    nameEN: 'Yi Xiang Pastry',
+    address: 'George Town, Penang',
+    intro: '傳承多年的老字號廣式糕餅店，以手工製作的旺來酥（鳳梨酥）、老婆餅與各式傳統月餅著稱，餅皮酥脆、內餡紮實，是許多在地人回鄉必買的懷念滋味。每逢節慶前排隊人潮絡繹不絕，是了解南洋華人飲食文化的最佳窗口之一。',
+    mapsUrl: 'https://maps.google.com/?q=義香餅店+George+Town+Penang'
+  },
+  '萬香餅家': {
+    nameEN: 'Wan Heong Pastry',
+    address: 'George Town, Penang',
+    intro: '喬治市人氣極高的傳統餅家，以手工雞蛋卷（Heong Peng）與各式酥餅聞名，堅持以炭火慢烤，成就外層焦脆、蛋香四溢的獨特口感。超過數十年的老店資歷，讓它成為許多檳城人記憶中不可替代的味道，也是外地旅客採購手信的熱門首選。',
+    mapsUrl: 'https://maps.google.com/?q=Wan+Heong+Biscuit+George+Town+Penang'
+  },
+  '景香餅家': {
+    nameEN: 'Keng Heong Pastry',
+    address: 'Lebuh Cintra, George Town, Penang',
+    intro: '喬治市百年歷史的傳統餅店，以招牌香餅（Heong Peng）聞名，這種圓形酥餅以麥芽糖、芝麻與蔥油為餡，外皮薄如紙張、入口即化。「Heong」在閩南語意指「香」，恰如其分地形容了這款烤出來香氣撲鼻的老式糕餅，是喬治市最具代表性的在地零食之一。',
+    mapsUrl: 'https://maps.google.com/?q=Keng+Heong+Biscuit+Penang'
+  },
+
+  // ── 檳城：休閒漫旅 ──────────────────────────────────────────
+  '興公司': {
+    nameEN: 'Hin Company (Hin Bus Depot Area)',
+    address: 'Jalan Gurdwara, George Town, Penang',
+    intro: '由廢棄公車總站活化再生的複合式文創空間，保留了工業感的高挑鋼架頂棚，內外牆面佈滿本地與國際藝術家的大型壁畫。平日有創意市集、藝廊展覽與獨立咖啡廳進駐，週末更有現場音樂與手作市場，是喬治市年輕創意能量最集中的地方。',
+    mapsUrl: 'https://maps.google.com/?q=Hin+Bus+Depot+Penang'
+  },
+  '丹絨武雅隱藏海灘': {
+    nameEN: 'Hidden Beach, Tanjung Bungah',
+    address: 'Tanjung Bungah, Penang',
+    intro: '丹絨武雅（Tanjung Bungah，意為「花角」）位於喬治市與峇都丁宜之間，這處隱藏小海灘鮮少出現在觀光地圖上，需循著小徑才能抵達。比起熱鬧的峇都丁宜，這裡安靜清幽、少有遊客，礁石遍布的小海灣在退潮時尤其迷人，是在地人私藏的半日遠離塵囂之所。',
+    mapsUrl: 'https://maps.google.com/?q=Hidden+Beach+Tanjung+Bungah+Penang'
+  },
+
+  // ── 檳城：古蹟建築 ──────────────────────────────────────────
+  '龍山堂邱公司': {
+    nameEN: 'Khoo Kongsi Clan House',
+    address: '18 Cannon Square, George Town, Penang',
+    intro: '建於 1906 年的龍山堂，是東南亞規模最宏偉、裝飾最精緻的華人宗祠，由從福建遷移而來的邱氏家族歷代積累財富所建。宗祠外牆遍佈精雕石獅、鎏金磚雕與彩繪屋脊，正殿之富麗堪稱「皇宮級」，曾因規格過高而傳說遭天雷擊毀、迫使降規重建。現已列入 UNESCO 喬治市世界文化遺產範圍，至今仍是活躍的宗族組織，定期舉行祭祀儀式。',
+    mapsUrl: 'https://maps.google.com/?q=Khoo+Kongsi+Penang'
+  },
+  '孫中山紀念館': {
+    nameEN: 'Dr. Sun Yat-Sen Museum Penang',
+    address: '120 Armenian Street, George Town, Penang',
+    intro: '檳城是孫中山先生革命生涯中的重要基地，1910 年廣州起義（黃花崗之役的前身）即在此祕密策劃。這棟保存完好的老式店屋見證了孫中山多次來檳募款、聯絡同志的歷史，館內陳列珍貴照片、文件與當年的革命史料，深刻呈現南洋華僑對中國近代革命的重要貢獻。',
+    mapsUrl: 'https://maps.google.com/?q=Sun+Yat+Sen+Museum+Penang'
+  },
+  '世德堂謝公司': {
+    nameEN: 'Cheah Kongsi Clan House',
+    address: '8 Lebuh Armenian, George Town, Penang',
+    intro: '創立於 1820 年的謝氏宗祠，是檳城歷史最悠久的宗祠之一，供奉謝、楊、柯等姓氏先祖，族人皆源自福建漳州五大姓。與龍山堂的金碧輝煌相比，世德堂氣質更為沉靜典雅，精雕木屏風、傳統彩燈與木刻牌匾共同構成一個仍在運作的宗族生活空間，是喬治市保存最完整的宗祠文化縮影之一。',
+    mapsUrl: 'https://maps.google.com/?q=Cheah+Kongsi+Penang'
+  },
+  '七間茶室': {
+    nameEN: 'Seven Terraces Heritage Hotel',
+    address: '14 Stewart Lane, George Town, Penang',
+    intro: '由七棟相連的 19 世紀英荷式店屋精心修復而成的精品文物旅館，出自修復藍屋（張弼士故居）的同一位建築師之手，細節一絲不苟。室內陳設融合娘惹風格彩色瓷磚、古董柚木家具與英國維多利亞式彩色玻璃，打造出一個活生生的南洋歷史場景。即使不過夜，其庭院咖啡廳與走廊同樣對外開放，是喬治市最具氛圍的下午茶場所之一。',
+    mapsUrl: 'https://maps.google.com/?q=Seven+Terraces+Penang'
+  },
+  '康華麗斯堡': {
+    nameEN: 'Fort Cornwallis',
+    address: 'Lebuh Light, George Town, Penang',
+    intro: '1786 年英國船長法蘭西斯·萊特（Francis Light）登陸檳城後，在此興建最初的木造堡壘，1810 年改建為磚造星形城堡，是馬來西亞保存最完整的英式棱堡。堡內著名的「斯里蘭拜砲」（Seri Rambai）相傳具有保佑求子的靈驗，吸引無數已婚婦女前來插花祈禱。城堡四面環繞白色廊道，臨海側可眺望檳城海峽，是了解英殖民初期歷史的必訪之地。',
+    mapsUrl: 'https://maps.google.com/?q=Fort+Cornwallis+Penang'
+  },
+  '一條路頂樓': {
+    nameEN: 'Rooftop Bar at Penang Road',
+    address: 'Lebuh Penang, George Town, Penang',
+    intro: '位於檳城路（Lebuh Penang）建築頂層的露天酒吧，是俯瞰喬治市 UNESCO 世界遺產老城低矮屋頂的絕佳制高點。夕陽西沉時，百年殖民地建築的瓦頂與尖塔在橙紅晚霞中輪廓鮮明，視覺震撼令人難忘。提供精釀調酒與輕食，是白天走訪古蹟後，傍晚放鬆俯瞰這座城市最美一面的理想場所。',
+    mapsUrl: 'https://maps.google.com/?q=rooftop+bar+Penang+Road+George+Town'
+  },
+
+  // ── 檳城：美食品味 ──────────────────────────────────────────
+  '大路後著名魚頭米粉': {
+    nameEN: 'Famous Fish Head Bee Hoon, Dato Keramat',
+    address: 'Jalan Dato Keramat, George Town, Penang',
+    intro: '檳城著名的魚頭米粉老攤，以新鮮鯛魚頭熬製乳白濃湯見稱——魚骨與薑片大火翻炒、小火慢燉數小時，湯頭才能達到奶白醇厚的境界。上桌時配上嫩滑魚片、豆腐、蔬菜與細滑米粉，口感鮮甜清爽，是本地人午餐必點的一道療癒美食。',
+    mapsUrl: 'https://maps.google.com/?q=fish+head+bee+hoon+Dato+Keramat+Penang'
+  },
+  '曼谷巷印度炒麵': {
+    nameEN: 'Bangkok Lane Mee Goreng',
+    address: 'Lorong Bangkok, George Town, Penang',
+    intro: '曼谷巷（Lorong Bangkok）的印度炒麵是檳城美食界的傳奇之一，攤主以大火鑊氣翻炒粗黃麵，加入番茄醬、辣椒醬、蝦膏與新鮮蝦仁，再覆上半熟蛋與豆芽，形成層次豐富的醬香與微辣口感。這種 Mamak 風格炒麵在檳城有其獨特的做法，與吉隆坡版本截然不同，被許多美食評論推選為全馬最佳印度炒麵。',
+    mapsUrl: 'https://maps.google.com/?q=Bangkok+Lane+Mee+Goreng+Penang'
+  },
+  '七條路巴剎 (下午茶)': {
+    nameEN: 'Kimberley Street Pasar (Afternoon Snacks)',
+    address: 'Kimberley Street (Lebuh Kimberley), George Town, Penang',
+    intro: '每天下午兩點開始，牛干冬（Kimberley Street）一帶的街邊攤位便陸續擺出五顏六色的傳統糕點：班蘭煎餅（Apom Balik）、釀豆腐（Yong Tau Foo）、娘惹糕（Nyonya Kueh）與各式糖水，是道地檳城人的日常下午茶儀式。比起遊客雲集的觀光小食攤，這裡的價格更親民、氣氛更真實，是感受老城慢活節奏最自然的方式。',
+    mapsUrl: 'https://maps.google.com/?q=Kimberley+Street+Market+Penang'
+  },
+  '金龍大路後炸香蕉': {
+    nameEN: 'Golden Dragon Fried Banana, Dato Keramat',
+    address: 'Jalan Dato Keramat, George Town, Penang',
+    intro: '大路後路邊的炸香蕉攤位，以外皮酥脆金黃、內餡香甜軟糯的炸大蕉（Pisang Goreng）聞名全檳，每逢出攤便吸引長龍排隊，往往不到午後便已售罄。炸漿以麵粉、米粉與椰漿調配，炸出來的外衣薄而酥脆，咬開後是烤焦糖香氣四溢的熱軟蕉肉，是路過絕對不能錯過的午後點心。',
+    mapsUrl: 'https://maps.google.com/?q=fried+banana+Dato+Keramat+Penang'
+  },
+  'Narrow Marrow': {
+    nameEN: 'Narrow Marrow',
+    address: 'George Town, Penang',
+    intro: '藏身喬治市老街區的現代創意小館，以融合馬來西亞多元飲食文化為靈魂——馬來香料、娘惹技法、華人食材與西式料理手法在這裡交織出獨特的菜單。空間保留了老店屋的細長格局與磨石子地板，搭配精心設計的用餐環境，是喬治市新生代飲食創作力的代表，也是尋找「不一樣的檳城味道」的必訪餐廳。',
+    mapsUrl: 'https://maps.google.com/?q=Narrow+Marrow+Penang'
   },
 
   // ── 怡保 ──────────────────────────────────────────────────
