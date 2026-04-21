@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#0D9488">
+  <title>🇲🇾 MY 旅遊 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-flag">🇲🇾</div>
+      <div class="header-text">
+        <h1>馬來西亞旅遊</h1>
+        <div class="header-sub">5月20日 – 5月24日</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="app-main">
+
+    <!-- 行程 -->
+    <section id="tab-itinerary" class="tab-pane active">
+      <div class="day-tabs" id="day-tabs"></div>
+      <div class="timeline-wrap" id="timeline-wrap"></div>
+    </section>
+
+    <!-- 景點 -->
+    <section id="tab-places" class="tab-pane">
+      <div class="section-search">
+        <input type="text" id="place-search" placeholder="搜尋景點…" autocomplete="off">
+      </div>
+      <div id="places-itinerary">
+        <h2 class="section-title">行程景點</h2>
+        <div class="cards-grid" id="cards-itinerary"></div>
+      </div>
+      <div id="places-optional">
+        <h2 class="section-title optional-title">周邊備選 <span class="badge-optional">有時間再去</span></h2>
+        <div class="cards-grid" id="cards-optional"></div>
+      </div>
+    </section>
+
+    <!-- 住宿 -->
+    <section id="tab-accommodation" class="tab-pane">
+      <div class="section-intro">
+        <p>各城市住宿資訊，點擊 Agoda 連結可查看訂房詳情。</p>
+      </div>
+      <div id="accommodation-list"></div>
+    </section>
+
+    <!-- 天氣 -->
+    <section id="tab-weather" class="tab-pane">
+      <div class="weather-wrap" id="weather-wrap"></div>
+      <div class="weather-tips">
+        <h3>🌂 旅遊小提示</h3>
+        <ul>
+          <li>5月為馬來西亞雨季，午後常有雷陣雨，建議隨身攜帶輕便折疊傘</li>
+          <li>氣溫約 27–34°C，濕度高，建議穿著輕薄透氣的衣物</li>
+          <li>外出景點多數需大量步行，建議穿舒適運動鞋</li>
+          <li>部分景點（如清真寺）進入需著長袖、長褲或長裙</li>
+          <li>多準備水分，隨時補充水份以防中暑</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 費用分攤 -->
+    <section id="tab-expenses" class="tab-pane">
+      <!-- 新增費用表單 -->
+      <div class="expense-form-wrap">
+        <h2 class="form-title">新增費用</h2>
+        <div class="expense-form" id="expense-form">
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label>日期</label>
+              <select id="exp-date">
+                <option value="5/20">5/20 週三</option>
+                <option value="5/21">5/21 週四</option>
+                <option value="5/22">5/22 週五</option>
+                <option value="5/23">5/23 週六</option>
+                <option value="5/24">5/24 週日</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>幣別</label>
+              <select id="exp-currency">
+                <option value="RM">馬幣 (RM)</option>
+                <option value="TWD">台幣 (TWD)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>項目說明</label>
+            <input type="text" id="exp-desc" placeholder="例：午餐、門票、計程車…" autocomplete="off">
+          </div>
+          <div class="form-row two-col">
+            <div class="form-group">
+              <label>金額</label>
+              <input type="number" id="exp-amount" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+              <label>付款人</label>
+              <select id="exp-payer"></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>分攤對象 <span class="label-hint">（點選勾選）</span></label>
+            <div class="split-members" id="split-members"></div>
+          </div>
+          <button class="btn-add-expense" id="btn-add-expense">＋ 新增</button>
+        </div>
+      </div>
+
+      <!-- 費用清單 -->
+      <div class="expense-list-wrap">
+        <div class="expense-list-header">
+          <h2 class="form-title">費用清單</h2>
+          <span class="expense-total" id="expense-total-badge"></span>
+        </div>
+        <div class="expense-days" id="expense-days"></div>
+        <div class="no-expenses hidden" id="no-expenses">
+          <span>尚未新增任何費用</span>
+        </div>
+      </div>
+
+      <!-- 結算摘要 -->
+      <div class="settlement-wrap" id="settlement-wrap">
+        <h2 class="form-title">💳 費用結算</h2>
+        <div id="settlement-content"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-tab="itinerary">
+      <div class="nav-icon">🗓️</div>
+      <div class="nav-label">行程</div>
+    </button>
+    <button class="nav-item" data-tab="places">
+      <div class="nav-icon">📍</div>
+      <div class="nav-label">景點</div>
+    </button>
+    <button class="nav-item" data-tab="accommodation">
+      <div class="nav-icon">🏨</div>
+      <div class="nav-label">住宿</div>
+    </button>
+    <button class="nav-item" data-tab="weather">
+      <div class="nav-icon">☀️</div>
+      <div class="nav-label">天氣</div>
+    </button>
+    <button class="nav-item" data-tab="expenses">
+      <div class="nav-icon">💰</div>
+      <div class="nav-label">費用</div>
+    </button>
+  </nav>
+
+  <!-- Place Detail Modal -->
+  <div id="place-modal" class="modal hidden">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
