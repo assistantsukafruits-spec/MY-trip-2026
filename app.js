@@ -50,8 +50,14 @@ function showLoading(on) {
   ['tab-itinerary', 'tab-places'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    if (on) {
-      el.innerHTML = `<div class="loading-state"><div class="spinner"></div><div>載入行程資料中…</div></div>`;
+    const existing = el.querySelector('.loading-state');
+    if (on && !existing) {
+      const div = document.createElement('div');
+      div.className = 'loading-state';
+      div.innerHTML = `<div class="spinner"></div><div>載入行程資料中…</div>`;
+      el.prepend(div);
+    } else if (!on && existing) {
+      existing.remove();
     }
   });
 }
@@ -60,12 +66,15 @@ function showLoadError(msg) {
   ['tab-itinerary', 'tab-places'].forEach(id => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.innerHTML = `
-      <div class="loading-state error">
-        <div style="font-size:32px">⚠️</div>
-        <div>載入失敗：${msg}</div>
-        <button class="btn-retry" onclick="location.reload()">重試</button>
-      </div>`;
+    const existing = el.querySelector('.loading-state');
+    if (existing) existing.remove();
+    const div = document.createElement('div');
+    div.className = 'loading-state error';
+    div.innerHTML = `
+      <div style="font-size:32px">⚠️</div>
+      <div>載入失敗：${msg}</div>
+      <button class="btn-retry" onclick="location.reload()">重試</button>`;
+    el.prepend(div);
   });
 }
 
