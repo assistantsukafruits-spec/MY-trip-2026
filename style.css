@@ -813,7 +813,7 @@ ul { list-style: none; }
 
 /* Settlement */
 .settlement-wrap {
-  background: #ECFDF5;
+  background: #CCFBF1;
   margin: 0 16px 16px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
