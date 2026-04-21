@@ -635,22 +635,15 @@ function renderExpenseList() {
       const row = document.createElement('div');
       row.className = `expense-row${isEditing ? ' editing' : ''}`;
       row.innerHTML = `
-        <div class="expense-row-top">
+        <div class="expense-row-main">
           <div class="expense-desc">${exp.desc}</div>
-          <div class="expense-amount-wrap">
+          <div class="expense-right">
             <span class="expense-amount">${exp.currency} ${exp.amount.toFixed(2)}</span>
+            <button class="btn-edit-expense" title="編輯">✏️</button>
+            <button class="btn-delete-expense" title="刪除">🗑️</button>
           </div>
         </div>
-        <div class="expense-meta">
-          💳 <strong>${exp.paidBy}</strong> 付款
-          &nbsp;·&nbsp;
-          👥 分攤：${exp.splitAmong.join('、')}
-          &nbsp;（各 ${exp.currency} ${(exp.amount / exp.splitAmong.length).toFixed(2)}）
-        </div>
-        <div class="expense-row-actions">
-          <button class="btn-edit-expense">✏️ 編輯</button>
-          <button class="btn-delete-expense">🗑️ 刪除</button>
-        </div>`;
+        <div class="expense-meta">💳 <strong>${exp.paidBy}</strong> 付款</div>`;
       row.querySelector('.btn-edit-expense').addEventListener('click', () => startEditExpense(exp));
       row.querySelector('.btn-delete-expense').addEventListener('click', () => {
         if (confirm(`確定刪除「${exp.desc}」？`)) handleDeleteExpense(exp.id);
