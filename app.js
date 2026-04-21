@@ -2,10 +2,11 @@
 // App State
 // ============================================================
 const state = {
-  activeTab:   'itinerary',
-  activeDay:   0,
-  days:        [],
-  places:      {},
+  activeTab:      'itinerary',
+  activeDay:      0,
+  days:           [],
+  places:         {},
+  editingExpId:   null,   // id of expense being edited (null = add mode)
   expenses:    [],
   selections:  JSON.parse(localStorage.getItem('trip-selections') || '{}'),
   loading:     true,
@@ -472,19 +473,101 @@ async function handleAddExpense() {
   btn.disabled = true;
   btn.textContent = '儲存中…';
 
+  const isEditing = !!state.editingExpId;
+
   try {
-    const exp = { id: Date.now().toString(), date, desc, amount, currency, paidBy, splitAmong };
-    state.expenses = await apiAddExpense(exp);
+    if (isEditing) {
+      // Delete old record first, then add updated one with same id
+      const oldId = state.editingExpId;
+      await apiDeleteExpense(oldId);
+      const exp = { id: oldId, date, desc, amount, currency, paidBy, splitAmong };
+      state.expenses = await apiAddExpense(exp);
+    } else {
+      const exp = { id: Date.now().toString(), date, desc, amount, currency, paidBy, splitAmong };
+      state.expenses = await apiAddExpense(exp);
+    }
+
+    // Reset form
     document.getElementById('exp-desc').value   = '';
     document.getElementById('exp-amount').value = '';
     document.querySelectorAll('#split-members .member-chip').forEach(c => c.classList.add('selected'));
+
+    // Exit edit mode if needed
+    if (isEditing) {
+      state.editingExpId = null;
+      btn.style.background = '';
+      document.getElementById('btn-cancel-expense')?.remove();
+    }
+
     renderExpenses();
   } catch (e) {
     alert('儲存失敗，請重試');
   } finally {
     btn.disabled = false;
-    btn.textContent = '＋ 新增';
+    btn.textContent = isEditing && state.editingExpId ? '💾 儲存修改' : '＋ 新增';
   }
+}
+
+function startEditExpense(exp) {
+  state.editingExpId = exp.id;
+
+  // Pre-fill form fields
+  document.getElementById('exp-date').value     = exp.date;
+  document.getElementById('exp-currency').value = exp.currency;
+  document.getElementById('exp-desc').value     = exp.desc;
+  document.getElementById('exp-amount').value   = exp.amount;
+  document.getElementById('exp-payer').value    = exp.paidBy;
+
+  // Set split members
+  document.querySelectorAll('#split-members .member-chip').forEach(chip => {
+    chip.classList.toggle('selected', exp.splitAmong.includes(chip.dataset.member));
+  });
+
+  // Change button label
+  const addBtn = document.getElementById('btn-add-expense');
+  if (addBtn) {
+    addBtn.textContent = '💾 儲存修改';
+    addBtn.style.background = 'var(--accent)';
+  }
+
+  // Add cancel button if not already present
+  if (!document.getElementById('btn-cancel-expense')) {
+    const cancelBtn = document.createElement('button');
+    cancelBtn.id        = 'btn-cancel-expense';
+    cancelBtn.type      = 'button';
+    cancelBtn.className = 'btn-cancel-expense';
+    cancelBtn.textContent = '✕ 取消編輯';
+    cancelBtn.addEventListener('click', cancelEdit);
+    addBtn?.insertAdjacentElement('afterend', cancelBtn);
+  }
+
+  // Scroll to form
+  document.querySelector('.expense-form-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Refresh list to highlight editing row
+  renderExpenseList();
+}
+
+function cancelEdit() {
+  state.editingExpId = null;
+
+  // Reset form
+  document.getElementById('exp-desc').value   = '';
+  document.getElementById('exp-amount').value = '';
+  document.querySelectorAll('#split-members .member-chip').forEach(c => c.classList.add('selected'));
+
+  // Restore add button
+  const addBtn = document.getElementById('btn-add-expense');
+  if (addBtn) {
+    addBtn.textContent   = '＋ 新增';
+    addBtn.style.background = '';
+  }
+
+  // Remove cancel button
+  document.getElementById('btn-cancel-expense')?.remove();
+
+  // Refresh list to remove highlight
+  renderExpenseList();
 }
 
 async function handleDeleteExpense(id) {
@@ -534,23 +617,34 @@ function renderExpenseList() {
     if (!grouped[date]) return;
     const grp = document.createElement('div');
     grp.className = 'expense-day-group';
-    grp.innerHTML = `<div class="expense-day-label">${date}（${WEEKDAYS[date] || ''}）</div>`;
+    grp.innerHTML = `<div class="expense-day-label">📅 ${date}（${WEEKDAYS[date] || ''}）</div>`;
 
     grouped[date].forEach(exp => {
       totals[exp.currency] = (totals[exp.currency] || 0) + exp.amount;
+      const isEditing = state.editingExpId === exp.id;
       const row = document.createElement('div');
-      row.className = 'expense-row';
+      row.className = `expense-row${isEditing ? ' editing' : ''}`;
       row.innerHTML = `
-        <div class="expense-main">
+        <div class="expense-row-top">
           <div class="expense-desc">${exp.desc}</div>
-          <div class="expense-meta">由 <strong>${exp.paidBy}</strong> 付款・分攤：${exp.splitAmong.join('、')}</div>
+          <div class="expense-amount-wrap">
+            <span class="expense-amount">${exp.currency} ${exp.amount.toFixed(2)}</span>
+          </div>
         </div>
-        <div class="expense-amount-wrap">
-          <div class="expense-amount">${exp.amount.toFixed(2)}</div>
-          <div class="expense-currency">${exp.currency}</div>
+        <div class="expense-meta">
+          💳 <strong>${exp.paidBy}</strong> 付款
+          &nbsp;·&nbsp;
+          👥 分攤：${exp.splitAmong.join('、')}
+          &nbsp;（各 ${exp.currency} ${(exp.amount / exp.splitAmong.length).toFixed(2)}）
         </div>
-        <button class="btn-delete-expense" title="刪除">×</button>`;
-      row.querySelector('.btn-delete-expense').addEventListener('click', () => handleDeleteExpense(exp.id));
+        <div class="expense-row-actions">
+          <button class="btn-edit-expense">✏️ 編輯</button>
+          <button class="btn-delete-expense">🗑️ 刪除</button>
+        </div>`;
+      row.querySelector('.btn-edit-expense').addEventListener('click', () => startEditExpense(exp));
+      row.querySelector('.btn-delete-expense').addEventListener('click', () => {
+        if (confirm(`確定刪除「${exp.desc}」？`)) handleDeleteExpense(exp.id);
+      });
       grp.appendChild(row);
     });
     daysEl.appendChild(grp);
