@@ -715,15 +715,19 @@ function renderSettlement() {
 
     const grp = document.createElement('div');
     grp.className = 'settlement-currency-group';
-    grp.innerHTML = `<div class="settlement-currency-label">── ${cur === 'RM' ? '馬幣（RM）' : '台幣（TWD）'} ──</div>`;
+    grp.innerHTML = `<div class="settlement-currency-label">${cur === 'RM' ? '馬幣（RM）' : '台幣（TWD）'}</div>`;
+
+    const ARROW_SVG = `<svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="0" y1="5" x2="18" y2="5"/><polyline points="13,1 18,5 13,9"/></svg>`;
 
     settlements.forEach(s => {
       const row = document.createElement('div');
       row.className = 'settlement-row';
       row.innerHTML = `
-        <span class="settlement-from">${s.from}</span>
-        <span class="settlement-arrow">→</span>
-        <span class="settlement-pays">付給 <span class="settlement-to">${s.to}</span></span>
+        <div class="settlement-left">
+          <span class="settlement-from">${s.from}</span>
+          <span class="settlement-arrow">${ARROW_SVG}</span>
+          <span class="settlement-to">${s.to}</span>
+        </div>
         <span class="settlement-amount">${s.currency} ${s.amount.toFixed(2)}</span>`;
       grp.appendChild(row);
     });
