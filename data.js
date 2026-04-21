@@ -539,7 +539,7 @@ const PLACE_ENRICHMENT = {
   },
   'Auntie': {
     nameEN: "Auntie Gaik Lean's Old House (Michelin 1-Star)",
-    intro: '米其林一星娘惹菜餐廳，主廚 Gaik Lean 以傳承自外婆的家傳秘方烹製土生華人（Peranakan）料理，包括娘惹叻沙、豬蹄醋（Pig's Trotter Vinegar）與各式娘惹糕點，風味正宗且精緻。餐廳設於老式店屋中，每日食材限量，建議提早訂位。'
+    intro: '米其林一星娘惹菜餐廳，主廚 Gaik Lean 以傳承自外婆的家傳秘方烹製土生華人（Peranakan）料理，包括娘惹叻沙、豬蹄醋（Pig Trotter Vinegar）與各式娘惹糕點，風味正宗且精緻。餐廳設於老式店屋中，每日食材限量，建議提早訂位。'
   },
   'Kimberley Lane 漫遊': {
     nameEN: 'Kimberley Street Heritage Walk',
