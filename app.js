@@ -643,7 +643,7 @@ function renderExpenseList() {
             <button class="btn-delete-expense" title="刪除">🗑️</button>
           </div>
         </div>
-        <div class="expense-meta">💳 <strong>${exp.paidBy}</strong> 付款</div>`;
+        <div class="expense-meta">💳 <strong>${exp.paidBy}</strong> 付款 &nbsp;|&nbsp; ${exp.splitAmong.length} 人</div>`;
       row.querySelector('.btn-edit-expense').addEventListener('click', () => startEditExpense(exp));
       row.querySelector('.btn-delete-expense').addEventListener('click', () => {
         if (confirm(`確定刪除「${exp.desc}」？`)) handleDeleteExpense(exp.id);
