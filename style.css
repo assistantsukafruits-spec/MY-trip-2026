@@ -165,6 +165,40 @@ ul { list-style: none; }
   color: white;
 }
 
+/* "其他景點" tab in itinerary */
+.day-tab.places-tab {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.day-tab.places-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Inline places search in itinerary tab */
+/* Note: .timeline-wrap already has padding:16px, so no extra horizontal padding needed */
+.itin-places-search {
+  margin: 12px 0 0;
+}
+.itin-places-search input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  background: var(--surface);
+  outline: none;
+  color: var(--text);
+}
+.itin-places-search input:focus {
+  border-color: var(--primary);
+}
+/* override .cards-grid horizontal padding since parent already has 16px */
+.itin-places-grid {
+  padding: 12px 0 4px;
+}
+
 /* ============================================================
    Timeline
    ============================================================ */

@@ -124,6 +124,18 @@ function renderItinerary() {
     tabsEl.appendChild(btn);
   });
 
+  // "其他景點" tab at the end
+  const placesTab = document.createElement('button');
+  placesTab.className = 'day-tab places-tab';
+  placesTab.textContent = '📍 其他景點';
+  placesTab.addEventListener('click', () => {
+    state.activeDay = -1;
+    document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+    placesTab.classList.add('active');
+    renderItineraryPlaces(wrapEl);
+  });
+  tabsEl.appendChild(placesTab);
+
   renderDayTimeline(state.days[state.activeDay], wrapEl);
 }
 
@@ -156,6 +168,43 @@ function renderDayTimeline(day, container) {
   });
 
   container.appendChild(timeline);
+}
+
+function renderItineraryPlaces(container) {
+  container.innerHTML = '';
+
+  const header = document.createElement('div');
+  header.className = 'day-header';
+  header.innerHTML = `
+    <div class="day-header-badge">景點</div>
+    <div class="day-header-title">其他景點</div>`;
+  container.appendChild(header);
+
+  const searchWrap = document.createElement('div');
+  searchWrap.className = 'itin-places-search';
+  searchWrap.innerHTML = `<input type="text" id="itin-place-search" placeholder="搜尋景點…" autocomplete="off">`;
+  container.appendChild(searchWrap);
+
+  const grid = document.createElement('div');
+  grid.className = 'cards-grid itin-places-grid';
+  container.appendChild(grid);
+
+  function renderGrid(filter) {
+    grid.innerHTML = '';
+    const q = (filter || '').trim().toLowerCase();
+    Object.entries(state.places).forEach(([key, p]) => {
+      if (p.category !== 'optional') return;
+      if (q) {
+        const hay = `${p.name}${p.intro || ''}${p.tag || ''}`.toLowerCase();
+        if (!hay.includes(q)) return;
+      }
+      grid.appendChild(createPlaceCard({ key, ...p }));
+    });
+  }
+
+  renderGrid('');
+  const inp = searchWrap.querySelector('#itin-place-search');
+  if (inp) inp.addEventListener('input', e => renderGrid(e.target.value));
 }
 
 function renderSingleItem(item) {
