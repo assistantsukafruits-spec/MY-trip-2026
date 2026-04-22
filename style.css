@@ -1082,6 +1082,7 @@ ul { list-style: none; }
 .km-card             { padding: 14px 16px; border-bottom: 1px solid var(--border); }
 .km-card:last-child  { border-bottom: none; }
 .km-card-title       { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+.km-card-title-en    { font-size: 11px; font-weight: 400; color: var(--text-3); font-style: italic; margin-left: 6px; vertical-align: middle; }
 .km-card-body p      { font-size: 13px; color: var(--text-2); line-height: 1.7; margin-bottom: 8px; }
 .km-card-body p:last-child { margin-bottom: 0; }
 .km-card-body strong { color: var(--text); font-weight: 700; }

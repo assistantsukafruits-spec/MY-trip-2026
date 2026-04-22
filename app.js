@@ -361,25 +361,38 @@ const KNOW_MORE_DATA = {
     {
       id: 'city',
       icon: '🏙️',
-      title: '城市之魂',
+      title: '城市簡介',
       color: 'teal',
       cards: [
         {
-          type: 'comparison',
-          title: '吉隆坡 vs 檳城：兩座城市，兩種靈魂',
-          body: '同樣是馬來西亞的華人城市，但兩地的根完全不同。\n\n**吉隆坡**的華人以廣東人為主。1857 年，葉亞來（Yap Ah Loy）帶著一批廣東礦工深入雨林開採錫礦，硬是在兩條河流的交匯處（Kuala Lumpur，即「泥濘的河口」）建起一座城市。吉隆坡的街頭至今仍以廣東話最為響亮，茨廠街的叫賣聲，都是粵語。\n\n**檳城**則由閩南人（福建話）建立。19 世紀大批泉州、漳州移民落腳喬治市，形成緊密的方言社群——姓氏橋上的鄭家、陳家，代代相傳的蝦麵配方，都是閩南移民留下的印記。在地人打招呼說的是福建話，「你好」不是「nǐ hǎo」，而是「Lí hó」。',
-          compare: [
-            { city: '吉隆坡', icon: '🏙️', tag: '廣東話為主', note: '礦工後裔・現代都會' },
-            { city: '檳城',   icon: '🌴', tag: '福建話為主', note: '海商後裔・UNESCO古城' }
-          ]
+          type: 'story',
+          title: '吉隆坡',
+          nameEN: 'Kuala Lumpur',
+          icon: '🏙️',
+          body: '「Kuala」是河口，「Lumpur」是泥濘——**吉隆坡，就是「泥濘的河口」**。1857 年，廣東礦工沿河溯入，在鞏河與鵝麥河交匯處登岸開採錫礦，什麼都沒有，只有雨林和泥。\n\n葉亞來（Yap Ah Loy）在多次內戰與大火後重建聚落，奠定城市雛形。英殖民時期，吉隆坡成為馬來聯邦首都，鐵路、礦業、行政機構陸續進駐，城市才真正成形。\n\n今天的吉隆坡是一座充滿層次的城市：茨廠街是廣東移民後代的根，百年老店與粵語叫賣聲從未改變；小印度（Brickfields）是南印度移民的聚落；布吉免登（Bukit Bintang）是購物與夜生活核心；雙峰塔（KLCC）周邊是現代金融中心，也是馬來西亞向世界宣示自己的地標。摩天大樓與廟宇並排，是 KL 獨有的城市景觀。'
+        },
+        {
+          type: 'story',
+          title: '檳城',
+          nameEN: 'Pulau Pinang',
+          icon: '🌴',
+          body: '馬來語全名 **Pulau Pinang**——「Pulau」是島，「Pinang」是檳榔樹，島上曾長滿而得名。1786 年，英國東印度公司的法蘭西斯・萊特（Francis Light）取得島嶼，建立喬治市，宣告自由貿易港開張——不收稅、誰都能來。\n\n人潮湧至：閩南商人、印度穆斯林、阿拉伯商人全都落腳。閩南人（主要來自泉州、漳州）數量最多，語言、廟宇、飲食逐漸成為喬治市華人社群的主體。今天走在亞美尼亞街，一條街可以同時看到清真寺、興都廟和福建會館——不是刻意規劃的，是兩百年人口流動自然堆疊的結果。\n\n在地華人說的是福建話，「你好」是「Lí hó」。如果你在街上聽到廣東話，對方多半是從 KL 來的遊客。\n\n2008 年，喬治市列入 UNESCO 世界文化遺產。你今天看到的壁畫、姓氏橋、殖民騎樓，都是這段歷史的有形遺留。'
         },
         {
           type: 'highlight',
-          tag: '台灣旅人特別值得知道',
-          title: '孫中山與檳城：最重要的海外革命基地',
+          tag: '文化深讀',
+          title: '峇峇娘惹：在地生根的融合之道',
+          icon: '🏮',
+          body: '15 世紀起，大批閩南、廣東商人沿著貿易路線落腳馬來半島，與當地馬來女性成婚，後代在兩種文化之間長大，逐漸形成獨特的「峇峇娘惹（Peranakan）」身分認同——男性稱峇峇（Baba），女性稱娘惹（Nyonya）。\n\n他們保留了中文姓氏、祖先崇拜與農曆節慶，卻以馬來語為日常語言，穿著馬來式服飾，並將馬來香料融入中式烹調，創造出獨樹一幟的飲食文化。娘惹的標誌性服飾是鑲蕾絲的 Kebaya 上衣搭配蠟染紗籠（Batik Sarong），極為精緻；傳統婚禮儀式長達 12 天，是文化融合最華麗的表達。他們甚至發展出一種混合閩南語與馬來語的「峇峇馬來語（Baba Malay）」，今天已幾近失傳。',
+          ctaText: '📍 檳城娘惹博物館（Pinang Peranakan Mansion），教堂街，喬治市'
+        },
+        {
+          type: 'highlight',
+          tag: '歷史連結',
+          title: '孫中山與檳城：革命的海外基地',
           icon: '✊',
-          body: '1910 年，孫中山先生親赴檳城，在亞美尼亞街 120 號設立中國同盟會南洋支部（今孫中山紀念館）。他選擇檳城，不是偶然——這裡的閩南、客家華僑富商慷慨解囊，成為推翻清朝的重要金主。\n\n同年，孫中山在此策劃為黃花崗起義籌款，《光華日報》也在同一棟建築中創刊——這是東南亞最早支持革命的華文媒體之一。\n\n台灣的中華民國與馬來西亞的華人社群，其實共同參與了同一段歷史。走一趟孫中山紀念館，你會對這段跨洋的革命情誼有全新的感受。',
-          ctaText: '📍 孫中山紀念館：亞美尼亞街 120 號，喬治市'
+          body: '孫中山選擇檳城作為南洋革命基地，並非偶然。英殖民管治下的檳城對政治活動管控相對寬鬆；島上閩南、客家富商對中國現代化抱有強烈的情感認同，也有足夠的財力支持革命。\n\n1910 年，孫中山在亞美尼亞街 120 號召開秘密會議，策劃廣州起義（黃花崗之役）並大規模籌款。同一棟建築，《光華日報》也在此時創刊——東南亞最早公開支持革命的華文媒體。這批南洋華僑的捐款，成為 1911 年辛亥革命成功的重要資金來源之一。\n\n對台灣旅客來說，這是教科書裡找不到、卻真實存在的歷史連結。',
+          ctaText: '📍 孫中山紀念館（Sun Yat-sen\'s Penang Base），亞美尼亞街 120 號，喬治市'
         }
       ]
     },
@@ -397,33 +410,33 @@ const KNOW_MORE_DATA = {
               groupLabel: '基本禮貌',
               groupColor: 'green',
               words: [
-                { malay: 'Terima kasih', chinese: '謝謝',    pronunciation: '得力嗎・卡西', scene: '任何時候道謝都用這句' },
-                { malay: 'Sama-sama',    chinese: '不客氣',  pronunciation: '沙嗎・沙嗎',   scene: '對方說謝謝時這樣回' },
-                { malay: 'Tolong',       chinese: '請、麻煩', pronunciation: '托龍',         scene: '開口請人幫忙時先說' },
-                { malay: 'Maaf',         chinese: '對不起',  pronunciation: '馬阿夫',        scene: '不小心碰到人時說' }
+                { malay: 'Terima kasih', chinese: '謝謝',     pronunciation: '得力嗎・卡西', scene: '任何時候道謝都用這句' },
+                { malay: 'Sama-sama',    chinese: '不客氣',   pronunciation: '沙嗎・沙嗎',   scene: '對方說謝謝時這樣回' },
+                { malay: 'Tolong',       chinese: '請、麻煩', pronunciation: '托龍',          scene: '開口請人幫忙時先說' },
+                { malay: 'Maaf',         chinese: '對不起',   pronunciation: '馬阿夫',        scene: '不小心碰到人時說' }
               ]
             },
             {
               groupLabel: '點餐必備',
               groupColor: 'orange',
               words: [
-                { malay: 'Kurang manis', chinese: '少糖',    pronunciation: '古浪・馬尼',    scene: '怕甜必說，否則預設超甜' },
-                { malay: 'Bungkus',      chinese: '打包外帶', pronunciation: '崩姑',          scene: '不想在店裡吃說這字' },
+                { malay: 'Kurang manis', chinese: '少糖',     pronunciation: '古浪・馬尼',    scene: '怕甜必說，否則預設超甜' },
+                { malay: 'Makan sini',   chinese: '內用',     pronunciation: '馬幹・西尼',    scene: '在店裡吃時說（vs. Bungkus 外帶）' },
+                { malay: 'Bungkus',      chinese: '外帶打包', pronunciation: '崩姑',          scene: '不想在店裡吃說這字' },
                 { malay: 'Satu lagi',    chinese: '再來一份', pronunciation: '沙都・拉吉',    scene: '太好吃想加點' },
-                { malay: 'Sedap',        chinese: '好吃！',  pronunciation: '些搭',           scene: '稱讚食物讓攤販很開心' },
-                { malay: 'Makan',        chinese: '吃飯',    pronunciation: '馬幹',           scene: '「去 makan？」是約吃飯' },
-                { malay: 'Air',          chinese: '水',      pronunciation: '阿依',           scene: '注意：不念 air，念阿依' },
-                { malay: 'Pedas',        chinese: '辣',      pronunciation: '北搭',           scene: '點餐前確認是否 pedas' }
+                { malay: 'Sedap',        chinese: '好吃！',   pronunciation: '些搭',          scene: '稱讚食物讓攤販很開心' },
+                { malay: 'Air',          chinese: '水',       pronunciation: '阿依',          scene: '注意：不念 air，念阿依' },
+                { malay: 'Pedas',        chinese: '辣',       pronunciation: '北搭',          scene: '點餐前確認是否 pedas' }
               ]
             },
             {
               groupLabel: '生活用語',
               groupColor: 'purple',
               words: [
-                { malay: 'Boleh',      chinese: '可以、沒問題', pronunciation: '玻勒',    scene: '萬能詞，什麼都能「boleh」' },
-                { malay: 'Tidak apa',  chinese: '沒關係',       pronunciation: '滴搭・阿怕', scene: '類似「no problem」' },
-                { malay: 'Mahal',      chinese: '貴',           pronunciation: '馬哈',    scene: '殺價前說這字老闆就懂' },
-                { malay: 'Murah',      chinese: '便宜',         pronunciation: '木拉',    scene: '讚美價格或討價還價' }
+                { malay: 'Boleh',               chinese: '可以、沒問題', pronunciation: '玻勒',             scene: '萬能詞，什麼都能「boleh」' },
+                { malay: 'Tak apa / Tidak apa', chinese: '沒關係',       pronunciation: '打阿怕 / 滴搭阿怕', scene: '口語用 tak apa 較自然' },
+                { malay: 'Mahal',               chinese: '貴',           pronunciation: '馬哈',             scene: '殺價前說這字老闆就懂' },
+                { malay: 'Murah sikit',         chinese: '便宜一點',     pronunciation: '木拉・西基',       scene: '殺價時用，比單說 murah 更實用' }
               ]
             }
           ]
@@ -438,43 +451,66 @@ const KNOW_MORE_DATA = {
       cards: [
         {
           type: 'story',
-          title: 'Kopitiam 文化：一杯咖啡，一個世界',
+          title: '咖啡店／茶餐室文化',
+          nameEN: 'Kopitiam',
           icon: '☕',
-          body: 'Kopitiam（咖啡廳）是「kopi」（咖啡，源自葡萄牙語）加上閩南語「店」（tiam）。這種海南人開設的傳統咖啡室，從 19 世紀延續至今，是馬來西亞各族日常生活的核心場所。\n\n點咖啡在這裡有一套獨特暗語，你必須知道：',
+          body: '「Kopitiam」由馬來語「Kopi」（咖啡）加閩南語「店」（tiam）組成，泛指傳統咖啡店或茶餐室。一杯咖啡、一份烤吐司配半熟蛋，坐上一個早上——這是馬來西亞人幾十年如一日的早晨節奏，也是各族共享的生活空間。點飲料有一套暗語你必須知道：',
           table: [
-            { code: 'Kopi',          desc: '咖啡加糖加煉乳（預設版）' },
-            { code: 'Kopi-O',        desc: '黑咖啡加糖，不加奶' },
-            { code: 'Kopi-C',        desc: '咖啡加糖加淡奶（鮮奶）' },
-            { code: 'Kopi-Ping',     desc: '以上任一加「Ping」= 加冰' },
-            { code: 'Kopi-O Kosong', desc: '黑咖啡不加糖不加奶' },
-            { code: 'Teh',           desc: '紅茶加糖加煉乳' },
-            { code: 'Teh Tarik',     desc: '「拉茶」，反覆拉出泡沫，是國民飲料' }
+            { code: 'Kopi',                 desc: '咖啡 + 糖 + 煉乳（預設版）' },
+            { code: 'Kopi-O',               desc: '黑咖啡 + 糖，不加奶' },
+            { code: 'Kopi-C',               desc: '咖啡 + 淡奶（鮮奶）+ 糖' },
+            { code: 'Kopi Peng / Kopi Ais', desc: '加冰（Peng 是閩南語，Ais 是馬來語）' },
+            { code: 'Kopi-O Kosong',        desc: '黑咖啡，不加糖不加奶' }
           ],
-          tip: '怕甜的人記得說「kurang manis（少糖）」或「kosong（不加糖）」，否則甜度可能讓你瞠目結舌。'
+          tip: 'Teh（紅茶）用法與 Kopi 完全相同。推薦台灣朋友試試 Teh Ais Limau（檸檬冰紅茶），清爽解膩。'
         },
         {
           type: 'story',
-          title: '檳城蝦麵的故事：拼搏精神的湯底',
+          title: '檳城福建蝦麵',
+          nameEN: 'Penang Hokkien Mee',
           icon: '🦐',
-          body: '19 世紀，大批福建移民在檳城海邊捕魚為生。蝦是賤貨，吃完蝦肉剩下一堆蝦頭蝦殼，窮苦漁民捨不得丟，便和豬骨一起下鍋大火熬煮。熬出來的湯汁出乎意料地鮮甜濃郁。這碗由「廢料」煮成的湯，就是今天全球美食評論家為之著迷的「Penang Hokkien Mee（檳城福建蝦麵）」。\n\nCNN Travel 曾票選它為「全球最美味食物」之一。每天清晨，從阿依淡到牛干冬，各家攤販的蝦頭仍在大鍋裡翻滾，百年配方未曾更改。'
+          body: '早期漁民把賣剩的蝦頭蝦殼和豬骨下鍋熬煮，鮮甜的湯汁出乎意料地濃郁迷人。一碗由「廢料」誕生的美食，搭配各種麵類、豬肉片、蝦子，湯頭鮮甜濃郁，成了 CNN Travel 票選「全球最美味食物」之一。在檳城，清晨五點就有人排隊，為的就是那鍋從不熄火的蝦湯。'
         },
         {
           type: 'story',
-          title: 'Nasi Lemak：用椰漿煮熟的國魂',
+          title: '吉隆坡福建麵',
+          nameEN: 'KL Hokkien Mee',
+          icon: '🍜',
+          body: '同樣叫「福建麵」，在吉隆坡端上桌的卻是完全不同的東西——**乾炒版**，大量黑醬油大火翻炒粗黃麵，加豬肉片、魷魚、豬油渣，顏色深黑、鑊氣十足。初次點餐請認清楚：「福建蝦麵」是湯麵，「福建炒麵」是乾炒，兩者根本是兩道菜。'
+        },
+        {
+          type: 'story',
+          title: '椰漿飯',
+          nameEN: 'Nasi Lemak',
           icon: '🥥',
-          body: '椰漿飯（Nasi Lemak）是馬來西亞非正式的「國菜」，也是最具代表性的早餐。「Lemak」在馬來語是「肥美、香濃」的意思，指用椰漿和香蘭葉一起煮出的香甜米飯。標準配備：一勺參峇辣椒醬（Sambal）、幾條江魚仔（小魚乾）、一把花生、半顆水煮蛋，用香蕉葉包起來——這個組合，售價可能只要 RM 2。\n\n對馬來西亞人來說，Nasi Lemak 不只是一頓飯，是一種安全感。'
+          body: '「Lemak」在馬來語是「肥美、香濃」——用椰漿和香蘭葉煮出來的米飯，配 Sambal 辣醬、江魚仔、花生、水煮蛋，香蕉葉一包，RM 2 起跳。全馬都吃，各族都愛，是馬來西亞非正式的「國菜」，也是最日常的早晨味道。'
         },
         {
           type: 'story',
-          title: 'Mamak 文化：24 小時的社交客廳',
-          icon: '🌙',
-          body: 'Mamak 是「馬來裔印度穆斯林」的暱稱，他們開設的餐廳遍佈全馬，24 小時不打烊，是馬來西亞生活方式的重要符號。\n\n凌晨 2 點，Mamak 仍座無虛席：工人在看足球直播，大學生在趕功課，一家人在吃消夜。拋餅（Roti Canai）配咖哩蘸醬一份 RM 1.5；拉茶（Teh Tarik）在空中被反覆高沖，泡沫豐厚。\n\nMamak 是各族通吃的空間——馬來人、華人、印度人都在這裡相遇，是馬來西亞多元社會最真實的橫截面。'
+          title: '肉骨茶',
+          nameEN: 'Bak Kut Teh',
+          icon: '🍖',
+          body: '閩南語直譯「肉骨茶」。早期碼頭苦力用豬骨加藥材熬湯補身，後來演變成全馬家喻戶曉的名菜。主要兩派：**馬來西亞版**藥材味濃、湯色深香；**新加坡版**以胡椒為主、湯色清亮。配白飯、油條，沾醬油蒜泥，是在地人的週末早餐儀式。'
         },
         {
           type: 'story',
-          title: '娘惹（Nyonya）料理：當中國遇見馬來',
+          title: '叻沙',
+          nameEN: 'Laksa',
+          icon: '🌶️',
+          body: '同一個名字，各地版本截然不同。**檳城亞參叻沙**以羅望子魚湯為底，酸辣無椰漿，第一口奇怪、第二口上癮；**咖哩叻沙（Curry Laksa）**用椰漿咖哩湯底，濃郁香辣。點之前記得確認是哪種，兩者是完全不同的宇宙。'
+        },
+        {
+          type: 'story',
+          title: '娘惹料理',
+          nameEN: 'Nyonya Cuisine',
           icon: '🌿',
-          body: '15 世紀，一批中國移民在馬六甲定居，與當地馬來人通婚，後代形成「峇峇娘惹」（Baba-Nyonya / Peranakan）文化。男性稱「峇峇（Baba）」，女性稱「娘惹（Nyonya）」。\n\n娘惹料理是這段融合歷史最美味的結晶：用中式烹調技法，搭配馬來香料（香茅、班蘭葉、黃薑）與椰漿，創造出獨一無二的風味。娘惹叻沙（Nyonya Laksa）、咖央（Kaya 椰漿蛋醬）、五香豬肉卷（Ngoh Hiang）——這些菜餚既不純粹是中式，也不純粹是馬來式，它們本身就是馬來西亞。'
+          body: '中國移民與馬來人世代通婚後代（峇峇娘惹）的飲食結晶：中式烹調手法，融入馬來香料（香茅、班蘭葉、黃薑）與椰漿，既不純中式、也不純馬來式。代表菜：**亞參魚（Ikan Asam）**，羅望子酸汁燒魚，酸香開胃；**小金杯（Kueh Pie Tee）**，酥脆薄杯填入炒薯絲與蝦，一口一個；**娘惹糕點（Nyonya Kueh）**，班蘭葉染色的彩色糕點，軟糯香甜。'
+        },
+        {
+          type: 'story',
+          title: 'Mamak 文化',
+          icon: '🌙',
+          body: '馬來裔印度穆斯林開設的餐館，24 小時不打烊，全馬遍布。拋餅（Roti Canai）配咖哩、Teh Tarik 在空中高沖出泡沫——凌晨兩點走進任何一家 Mamak，仍然座無虛席。工人看足球直播，大學生趕功課，一家人吃消夜，三大族群都在這裡相遇。這是馬來西亞多元社會最接地氣的縮影。'
         }
       ]
     },
@@ -499,11 +535,6 @@ const KNOW_MORE_DATA = {
               body: '在馬來西亞，用食指直接指向他人或物品被認為不禮貌，帶有指責意味。當地人習慣以右手大拇指（整隻手呈握拳狀，拇指向前）指引方向。你在街頭問路時，留意看——本地人基本上都這樣做。'
             },
             {
-              icon: '⏰',
-              title: 'Jam Karet：橡皮筋時間',
-              body: '馬來語「Jam Karet」（橡皮時間）是本地人對時間觀念的自嘲。私下社交場合，邀約說 6 點、7 點才到是完全正常的。但旅遊接送、導覽、餐廳訂位請準時——那可是真的會誤事。'
-            },
-            {
               icon: '💵',
               title: '小費文化',
               body: '馬來西亞整體不盛行給小費。高檔餐廳帳單通常已含 10% 服務費與 6% SST 稅，此時不必另外給。普通餐廳、Kopitiam、路邊攤則沒有給小費的習慣。若服務特別好（如行李員、導遊），RM 5–10 是適當的感謝。'
@@ -511,17 +542,17 @@ const KNOW_MORE_DATA = {
             {
               icon: '🤲',
               title: '接遞物品用右手（或雙手）',
-              body: '在馬來及印度文化中，左手被視為不潔（用於如廁），因此遞送物品、付錢、接受食物時，習慣使用右手或雙手。對年長者雙手遞送是最恭敬的方式。'
+              body: '在馬來及印度文化中，左手被視為不潔，因此遞送物品、付錢、接受食物時，習慣使用右手或雙手。對年長者雙手遞送是最恭敬的方式。'
+            },
+            {
+              icon: '🐄',
+              title: '印度人不吃牛肉',
+              body: '馬來西亞的印度裔居民多為印度教徒，牛在印度教中是神聖的動物，因此不食用牛肉。在印度餐館用餐，菜單上通常不會出現牛肉。若想吃牛肉，華人餐廳或清真認證（Halal）餐廳都提供。多族群社會裡，了解彼此的飲食禁忌，是最基本的尊重。'
             },
             {
               icon: '🐷',
               title: '在清真餐廳不問豬肉和酒',
-              body: '馬來西亞約 60% 人口為穆斯林，清真（Halal）認證的餐廳不提供豬肉及酒精。Mamak 餐廳、馬來餐廳均屬清真場所，在這裡詢問「有沒有豬肉？」是失禮的。若想吃豬肉，去華人 Kopitiam 或非清真中餐館，一眼就能判斷。'
-            },
-            {
-              icon: '📸',
-              title: '拍攝人物前先示意',
-              body: '拍攝路邊攤販、市場工作者或穿傳統服飾的長者前，先微笑示意或點頭詢問是基本禮儀。大多數人會欣然同意並給你一個燦爛的笑臉——貿然對準鏡頭有時讓人不舒服，特別是在清真寺附近。'
+              body: 'Mamak 餐廳、馬來餐廳均屬清真（Halal）場所，不提供豬肉及酒精。在這些地方詢問「有沒有豬肉？」是失禮的。若想吃豬肉，去華人 Kopitiam 或非清真中餐館，一眼就能判斷。'
             }
           ]
         }
@@ -655,7 +686,10 @@ function renderKmStory(card) {
     }</div>`;
   }
   el.innerHTML = `
-    <div class="km-card-title">${card.icon ? card.icon + ' ' : ''}${card.title}</div>
+    <div class="km-card-title">
+      ${card.icon ? card.icon + ' ' : ''}${card.title}
+      ${card.nameEN ? `<span class="km-card-title-en">${card.nameEN}</span>` : ''}
+    </div>
     <div class="km-card-body">${kmFormatBody(card.body)}</div>
     ${tableHtml}
     ${card.tip ? `<div class="km-story-tip">💡 ${card.tip}</div>` : ''}`;
