@@ -401,7 +401,7 @@ const KNOW_MORE_DATA = {
       icon: '💬',
       title: '馬來文速成',
       color: 'amber',
-      intro: '馬來西亞官方語言是馬來語（Bahasa Malaysia），但華人區多數人也說中文。會幾句馬來語，服務立刻不同——當地人會對你多一份親切感。',
+      intro: '馬來西亞官方語言是馬來語（Bahasa Malaysia），但根據種族和教育環境，大家會的語言更多元。這邊讓大家學習一些簡單的馬來語——大家都很好學，而且用得上時，對方會對你多一份親切感。',
       cards: [
         {
           type: 'flashcards',
