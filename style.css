@@ -1032,6 +1032,17 @@ ul { list-style: none; }
 .km-section--green  { --km-accent: #059669; --km-accent-bg: #F0FDF4; --km-accent-light: #D1FAE5; }
 .km-section--purple { --km-accent: #7C3AED; --km-accent-bg: #FAF5FF; --km-accent-light: #EDE9FE; }
 
+/* 城市簡介：story 卡片各自浮為獨立卡片，吉隆坡 / 檳城明顯切分 */
+.km-section--teal .km-section-body { background: var(--km-accent-bg); padding: 8px 0 8px; }
+.km-section--teal .km-card--story  {
+  margin: 0 10px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--km-accent-light);
+  border-bottom: 1px solid var(--km-accent-light) !important;
+  background: var(--surface);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+
 /* Page header */
 .km-page-header { padding: 20px 16px 8px; }
 .km-page-title  { font-size: 22px; font-weight: 800; color: var(--text); letter-spacing: -.3px; }
