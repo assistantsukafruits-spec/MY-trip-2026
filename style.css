@@ -612,6 +612,71 @@ ul { list-style: none; }
   color: var(--primary);
 }
 
+/* ---- Open-Meteo Weather Widget ----------------------------- */
+.wx-loading {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 10px; padding: 40px 16px; color: var(--text-2); font-size: 14px;
+}
+.wx-notice {
+  margin: 0 16px 8px; padding: 8px 12px;
+  background: #FEF3C7; border-radius: 8px;
+  font-size: 12px; color: #92400E; line-height: 1.5;
+}
+.wx-city-header {
+  padding: 2px 16px 8px; font-size: 14px;
+  font-weight: 700; color: var(--text-2);
+}
+.wx-date-tabs {
+  display: flex; gap: 6px; padding: 0 16px 12px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+}
+.wx-date-tabs::-webkit-scrollbar { display: none; }
+.wx-date-tab {
+  flex-shrink: 0; padding: 7px 14px; border-radius: 20px;
+  background: var(--surface); box-shadow: var(--shadow);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  text-align: center; line-height: 1.3;
+  -webkit-tap-highlight-color: transparent;
+}
+.wx-date-tab.active { background: var(--primary); color: #fff; }
+
+.wx-main-card {
+  margin: 0 16px 12px; border-radius: var(--radius);
+  padding: 20px; color: #fff;
+  background: linear-gradient(135deg, var(--primary) 0%, #0F766E 100%);
+}
+.wx-temp-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.wx-temp-big { font-size: 64px; font-weight: 800; line-height: 1; }
+.wx-emoji-big { font-size: 36px; line-height: 1; }
+.wx-condition { font-size: 15px; font-weight: 600; margin-top: 4px; opacity: .9; }
+.wx-meta-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+}
+.wx-meta-item {
+  background: rgba(255,255,255,.18); border-radius: 8px;
+  padding: 9px 10px;
+}
+.wx-meta-label { font-size: 11px; opacity: .8; margin-bottom: 3px; }
+.wx-meta-val   { font-size: 16px; font-weight: 700; }
+
+.wx-hourly-wrap {
+  overflow-x: auto; padding: 0 16px 12px;
+  -webkit-overflow-scrolling: touch;
+}
+.wx-hourly-wrap::-webkit-scrollbar { display: none; }
+.wx-hourly-row { display: flex; gap: 8px; width: max-content; }
+.wx-hour-item {
+  flex-shrink: 0; width: 62px;
+  background: var(--surface); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 8px 4px 10px;
+  text-align: center; border: 2px solid transparent;
+}
+.wx-hour-item.now { border-color: var(--primary); }
+.wx-hour-time  { font-size: 11px; color: var(--text-3); margin-bottom: 2px; }
+.wx-hour-emoji { font-size: 22px; margin: 3px 0; }
+.wx-hour-temp  { font-size: 14px; font-weight: 700; }
+.wx-hour-rain  { font-size: 11px; color: #3B82F6; margin-top: 3px; }
+
 /* ============================================================
    Expenses
    ============================================================ */

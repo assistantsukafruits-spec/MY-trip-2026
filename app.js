@@ -395,27 +395,200 @@ function renderAccommodation() {
 }
 
 // ============================================================
-// Weather
+// Weather (Open-Meteo)
 // ============================================================
-function renderWeather() {
+
+const WEATHER_CITIES = {
+  penang: { name: '檳城', emoji: '🌴', lat: 5.4141, lon: 100.3288,
+            dates: ['5/20','5/21','5/22'], tripStart: '2026-05-20', tripEnd: '2026-05-22' },
+  kl:     { name: '吉隆坡', emoji: '🏙️', lat: 3.1390, lon: 101.6869,
+            dates: ['5/23','5/24'],       tripStart: '2026-05-23', tripEnd: '2026-05-24' }
+};
+
+function wmoEmoji(code) {
+  if (code === 0)  return ['☀️','晴天'];
+  if (code <= 2)   return ['⛅','局部多雲'];
+  if (code === 3)  return ['☁️','陰天'];
+  if (code <= 48)  return ['🌫️','霧'];
+  if (code <= 55)  return ['🌦️','毛毛雨'];
+  if (code <= 67)  return ['🌧️','雨'];
+  if (code <= 82)  return ['🌦️','陣雨'];
+  return                  ['⛈️','雷雨'];
+}
+
+function getActiveCityKey() {
+  const now = new Date();
+  const key = `${now.getMonth()+1}/${now.getDate()}`;
+  for (const [id, c] of Object.entries(WEATHER_CITIES)) {
+    if (c.dates.includes(key)) return id;
+  }
+  return now < new Date(2026, 4, 20) ? 'penang' : 'kl';
+}
+
+function getWeatherDateRange(cityKey) {
+  const c = WEATHER_CITIES[cityKey];
+  const today = new Date();
+  const tripStart = new Date(2026, 4, 20);
+  const daysToTrip = Math.ceil((tripStart - today) / 86400000);
+  const todayKey = `${today.getMonth()+1}/${today.getDate()}`;
+  if (c.dates.includes(todayKey) || (daysToTrip >= 0 && daysToTrip <= 16))
+    return { start: c.tripStart, end: c.tripEnd, isTripDate: true };
+  const s = today.toISOString().slice(0,10);
+  const e = new Date(today.getTime() + 2*86400000).toISOString().slice(0,10);
+  return { start: s, end: e, isTripDate: false };
+}
+
+async function fetchWeatherData(cityKey) {
+  const range = getWeatherDateRange(cityKey);
+  const cacheKey = `weather-${cityKey}-${range.start}-v1`;
+  const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+  if (cached && Date.now() - cached.ts < 3 * 60 * 60 * 1000) return cached.data;
+  const c = WEATHER_CITIES[cityKey];
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}`
+    + `&hourly=temperature_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,relativehumidity_2m`
+    + `&timezone=Asia%2FKuala_Lumpur&start_date=${range.start}&end_date=${range.end}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('weather fetch failed');
+  const data = await r.json();
+  localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data }));
+  return data;
+}
+
+async function renderWeather() {
   const wrap = document.getElementById('weather-wrap');
   if (!wrap) return;
-  wrap.innerHTML = '';
+  wrap.innerHTML = `<div class="wx-loading"><div class="spinner"></div><div>載入天氣資料…</div></div>`;
 
-  Object.values(CONFIG.weather).forEach(w => {
-    const card = document.createElement('div');
-    card.className = 'weather-card';
-    card.innerHTML = `
-      <div class="weather-city-row">
-        <div class="weather-emoji">${w.emoji}</div>
-        <div class="weather-city-name">${w.city}</div>
+  const cityKey = getActiveCityKey();
+  const city    = WEATHER_CITIES[cityKey];
+  const range   = getWeatherDateRange(cityKey);
+  let data;
+  try {
+    data = await fetchWeatherData(cityKey);
+  } catch(_) {
+    // Fallback: AccuWeather links
+    wrap.innerHTML = '';
+    Object.values(CONFIG.weather).forEach(w => {
+      const card = document.createElement('div');
+      card.className = 'weather-card';
+      card.innerHTML = `
+        <div class="weather-city-row">
+          <div class="weather-emoji">${w.emoji}</div>
+          <div class="weather-city-name">${w.city}</div>
+        </div>
+        <div class="weather-tip">${w.tip}</div>
+        <a href="${w.acuUrl}" target="_blank" rel="noopener" class="weather-btn">
+          🌤️ 查看 AccuWeather 天氣預報
+        </a>`;
+      wrap.appendChild(card);
+    });
+    return;
+  }
+
+  wrap.innerHTML = '';
+  const hourlyTimes = data.hourly.time;
+  const dateSet = [...new Set(hourlyTimes.map(t => t.slice(0,10)))];
+  const todayStr = new Date().toISOString().slice(0,10);
+  let activeDate = dateSet.includes(todayStr) ? todayStr : dateSet[0];
+
+  if (!range.isTripDate) {
+    const notice = document.createElement('div');
+    notice.className = 'wx-notice';
+    notice.textContent = '📅 目前顯示即時天氣，5/4 起自動切換行程預報';
+    wrap.appendChild(notice);
+  }
+
+  const cityBadge = document.createElement('div');
+  cityBadge.className = 'wx-city-header';
+  cityBadge.textContent = `${city.emoji} ${city.name}`;
+  wrap.appendChild(cityBadge);
+
+  const tabsEl = document.createElement('div');
+  tabsEl.className = 'wx-date-tabs';
+  wrap.appendChild(tabsEl);
+
+  const WD = ['日','一','二','三','四','五','六'];
+
+  function renderDateContent(dateStr) {
+    wrap.querySelectorAll('.wx-main-card,.wx-hourly-wrap').forEach(el => el.remove());
+    const indices = hourlyTimes.map((t,i) => t.startsWith(dateStr) ? i : -1).filter(i => i >= 0);
+    if (!indices.length) return;
+    const noonIdx = indices.find(i => hourlyTimes[i].includes('T12:')) ?? indices[Math.floor(indices.length/2)];
+    const H = data.hourly;
+    const temp  = Math.round(H.temperature_2m[noonIdx]);
+    const feels = Math.round(H.apparent_temperature[noonIdx]);
+    const rain  = H.precipitation_probability[noonIdx];
+    const wind  = Math.round(H.windspeed_10m[noonIdx]);
+    const humid = H.relativehumidity_2m[noonIdx];
+    const [wEmoji, wDesc] = wmoEmoji(H.weathercode[noonIdx]);
+
+    const main = document.createElement('div');
+    main.className = 'wx-main-card';
+    main.innerHTML = `
+      <div class="wx-temp-row">
+        <div class="wx-temp-big">${temp}°</div>
+        <div>
+          <div class="wx-emoji-big">${wEmoji}</div>
+          <div class="wx-condition">${wDesc}</div>
+        </div>
       </div>
-      <div class="weather-tip">${w.tip}</div>
-      <a href="${w.acuUrl}" target="_blank" rel="noopener" class="weather-btn">
-        🌤️ 查看 AccuWeather 天氣預報
-      </a>`;
-    wrap.appendChild(card);
+      <div class="wx-meta-grid">
+        <div class="wx-meta-item"><div class="wx-meta-label">體感溫度</div><div class="wx-meta-val">${feels}°C</div></div>
+        <div class="wx-meta-item"><div class="wx-meta-label">降雨機率</div><div class="wx-meta-val">${rain}%</div></div>
+        <div class="wx-meta-item"><div class="wx-meta-label">濕度</div><div class="wx-meta-val">${humid}%</div></div>
+        <div class="wx-meta-item"><div class="wx-meta-label">風速</div><div class="wx-meta-val">${wind} km/h</div></div>
+      </div>`;
+    wrap.appendChild(main);
+
+    const nowHour = new Date().toISOString().slice(0,13);
+    const hourlyWrap = document.createElement('div');
+    hourlyWrap.className = 'wx-hourly-wrap';
+    const row = document.createElement('div');
+    row.className = 'wx-hourly-row';
+    indices.forEach(i => {
+      const t = hourlyTimes[i];
+      const hour = t.slice(11,16);
+      const isNow = t.slice(0,13) === nowHour;
+      const [hEmoji] = wmoEmoji(H.weathercode[i]);
+      const item = document.createElement('div');
+      item.className = 'wx-hour-item' + (isNow ? ' now' : '');
+      item.innerHTML = `
+        <div class="wx-hour-time">${hour}</div>
+        <div class="wx-hour-emoji">${hEmoji}</div>
+        <div class="wx-hour-temp">${Math.round(H.temperature_2m[i])}°</div>
+        <div class="wx-hour-rain">💧${H.precipitation_probability[i]}%</div>`;
+      row.appendChild(item);
+    });
+    hourlyWrap.appendChild(row);
+    wrap.appendChild(hourlyWrap);
+    if (dateStr === todayStr) {
+      setTimeout(() => {
+        const nowEl = row.querySelector('.now');
+        if (nowEl) nowEl.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+      }, 100);
+    }
+  }
+
+  dateSet.forEach(dateStr => {
+    const d = new Date(dateStr + 'T12:00:00');
+    const tab = document.createElement('div');
+    tab.className = 'wx-date-tab' + (dateStr === activeDate ? ' active' : '');
+    if (range.isTripDate) {
+      tab.innerHTML = `${d.getMonth()+1}/${d.getDate()}<br><span style="font-size:10px;font-weight:400">${WD[d.getDay()]}</span>`;
+    } else {
+      const diff = Math.round((d - new Date(todayStr+'T12:00:00')) / 86400000);
+      tab.textContent = ['今天','明天','後天'][diff] ?? `${d.getMonth()+1}/${d.getDate()}`;
+    }
+    tab.addEventListener('click', () => {
+      tabsEl.querySelectorAll('.wx-date-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      activeDate = dateStr;
+      renderDateContent(dateStr);
+    });
+    tabsEl.appendChild(tab);
   });
+
+  renderDateContent(activeDate);
 }
 
 // ============================================================
