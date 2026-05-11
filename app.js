@@ -795,10 +795,20 @@ function renderAccommodation() {
 
 const WEATHER_CITIES = {
   penang: { name: '檳城', emoji: '🌴', lat: 5.4141, lon: 100.3288,
-            dates: ['5/20','5/21','5/22'], tripStart: '2026-05-20', tripEnd: '2026-05-22' },
+            dates: ['5/19','5/20','5/21','5/22'], tripStart: '2026-05-19', tripEnd: '2026-05-22' },
   kl:     { name: '吉隆坡', emoji: '🏙️', lat: 3.1390, lon: 101.6869,
-            dates: ['5/23','5/24'],       tripStart: '2026-05-23', tripEnd: '2026-05-24' }
+            dates: ['5/23','5/24','5/25'],        tripStart: '2026-05-23', tripEnd: '2026-05-25' }
 };
+
+const TRIP_DAYS = [
+  { dateStr: '2026-05-19', cityKey: 'penang', label: '5/19' },
+  { dateStr: '2026-05-20', cityKey: 'penang', label: '5/20' },
+  { dateStr: '2026-05-21', cityKey: 'penang', label: '5/21' },
+  { dateStr: '2026-05-22', cityKey: 'penang', label: '5/22' },
+  { dateStr: '2026-05-23', cityKey: 'kl',     label: '5/23' },
+  { dateStr: '2026-05-24', cityKey: 'kl',     label: '5/24' },
+  { dateStr: '2026-05-25', cityKey: 'kl',     label: '5/25' },
+];
 
 function wmoEmoji(code) {
   if (code === 0)  return ['☀️','晴天'];
@@ -811,23 +821,18 @@ function wmoEmoji(code) {
   return                  ['⛈️','雷雨'];
 }
 
-function getActiveCityKey() {
-  const now = new Date();
-  const key = `${now.getMonth()+1}/${now.getDate()}`;
-  for (const [id, c] of Object.entries(WEATHER_CITIES)) {
-    if (c.dates.includes(key)) return id;
-  }
-  return now < new Date(2026, 4, 20) ? 'penang' : 'kl';
+function isTripMode() {
+  const today = new Date();
+  const tripStart = new Date(2026, 4, 19); // 5/19
+  const tripEnd   = new Date(2026, 4, 25); // 5/25
+  const daysToTrip = Math.ceil((tripStart - today) / 86400000);
+  return (daysToTrip >= 0 && daysToTrip <= 16) || today <= tripEnd;
 }
 
 function getWeatherDateRange(cityKey) {
   const c = WEATHER_CITIES[cityKey];
+  if (isTripMode()) return { start: c.tripStart, end: c.tripEnd, isTripDate: true };
   const today = new Date();
-  const tripStart = new Date(2026, 4, 20);
-  const daysToTrip = Math.ceil((tripStart - today) / 86400000);
-  const todayKey = `${today.getMonth()+1}/${today.getDate()}`;
-  if (c.dates.includes(todayKey) || (daysToTrip >= 0 && daysToTrip <= 16))
-    return { start: c.tripStart, end: c.tripEnd, isTripDate: true };
   const s = today.toISOString().slice(0,10);
   const e = new Date(today.getTime() + 2*86400000).toISOString().slice(0,10);
   return { start: s, end: e, isTripDate: false };
@@ -854,14 +859,22 @@ async function renderWeather() {
   if (!wrap) return;
   wrap.innerHTML = `<div class="wx-loading"><div class="spinner"></div><div>載入天氣資料…</div></div>`;
 
-  const cityKey = getActiveCityKey();
-  const city    = WEATHER_CITIES[cityKey];
-  const range   = getWeatherDateRange(cityKey);
-  let data;
+  const tripMode = isTripMode();
+  const todayStr = new Date().toISOString().slice(0,10);
+  const WD = ['日','一','二','三','四','五','六'];
+
+  let dataMap = {};
   try {
-    data = await fetchWeatherData(cityKey);
+    if (tripMode) {
+      const [pd, kd] = await Promise.all([
+        fetchWeatherData('penang'),
+        fetchWeatherData('kl')
+      ]);
+      dataMap = { penang: pd, kl: kd };
+    } else {
+      dataMap = { penang: await fetchWeatherData('penang') };
+    }
   } catch(_) {
-    // Fallback: AccuWeather links
     wrap.innerHTML = '';
     Object.values(CONFIG.weather).forEach(w => {
       const card = document.createElement('div');
@@ -881,35 +894,46 @@ async function renderWeather() {
   }
 
   wrap.innerHTML = '';
-  const hourlyTimes = data.hourly.time;
-  const dateSet = [...new Set(hourlyTimes.map(t => t.slice(0,10)))];
-  const todayStr = new Date().toISOString().slice(0,10);
-  let activeDate = dateSet.includes(todayStr) ? todayStr : dateSet[0];
 
-  if (!range.isTripDate) {
+  // Build the list of tabs to show
+  let dayList;
+  if (tripMode) {
+    dayList = TRIP_DAYS;
+  } else {
+    dayList = [0,1,2].map(offset => {
+      const d = new Date(new Date().getTime() + offset * 86400000);
+      return { dateStr: d.toISOString().slice(0,10), cityKey: 'penang', label: ['今天','明天','後天'][offset] };
+    });
     const notice = document.createElement('div');
     notice.className = 'wx-notice';
     notice.textContent = '📅 目前顯示即時天氣，5/4 起自動切換行程預報';
     wrap.appendChild(notice);
   }
 
-  const cityBadge = document.createElement('div');
-  cityBadge.className = 'wx-city-header';
-  cityBadge.textContent = `${city.emoji} ${city.name}`;
-  wrap.appendChild(cityBadge);
+  const defaultDay = dayList.find(d => d.dateStr === todayStr) ?? dayList[1];
+  let activeDate   = defaultDay.dateStr;
+  let activeCityKey = defaultDay.cityKey;
 
   const tabsEl = document.createElement('div');
   tabsEl.className = 'wx-date-tabs';
   wrap.appendChild(tabsEl);
 
-  const WD = ['日','一','二','三','四','五','六'];
+  function renderDateContent(dateStr, cityKey) {
+    wrap.querySelectorAll('.wx-city-header,.wx-main-card,.wx-hourly-wrap').forEach(el => el.remove());
+    const city = WEATHER_CITIES[cityKey];
+    const data = dataMap[cityKey];
+    if (!data) return;
+    const H = data.hourly;
+    const hourlyTimes = H.time;
 
-  function renderDateContent(dateStr) {
-    wrap.querySelectorAll('.wx-main-card,.wx-hourly-wrap').forEach(el => el.remove());
+    const cityBadge = document.createElement('div');
+    cityBadge.className = 'wx-city-header';
+    cityBadge.textContent = `${city.emoji} ${city.name}`;
+    wrap.appendChild(cityBadge);
+
     const indices = hourlyTimes.map((t,i) => t.startsWith(dateStr) ? i : -1).filter(i => i >= 0);
     if (!indices.length) return;
     const noonIdx = indices.find(i => hourlyTimes[i].includes('T12:')) ?? indices[Math.floor(indices.length/2)];
-    const H = data.hourly;
     const temp  = Math.round(H.temperature_2m[noonIdx]);
     const feels = Math.round(H.apparent_temperature[noonIdx]);
     const rain  = H.precipitation_probability[noonIdx];
@@ -964,26 +988,26 @@ async function renderWeather() {
     }
   }
 
-  dateSet.forEach(dateStr => {
+  dayList.forEach(({ dateStr, cityKey, label }) => {
     const d = new Date(dateStr + 'T12:00:00');
     const tab = document.createElement('div');
     tab.className = 'wx-date-tab' + (dateStr === activeDate ? ' active' : '');
-    if (range.isTripDate) {
-      tab.innerHTML = `${d.getMonth()+1}/${d.getDate()}<br><span style="font-size:10px;font-weight:400">${WD[d.getDay()]}</span>`;
+    if (tripMode) {
+      tab.innerHTML = `${label}<br><span style="font-size:10px;font-weight:400">${WD[d.getDay()]}</span>`;
     } else {
-      const diff = Math.round((d - new Date(todayStr+'T12:00:00')) / 86400000);
-      tab.textContent = ['今天','明天','後天'][diff] ?? `${d.getMonth()+1}/${d.getDate()}`;
+      tab.textContent = label;
     }
     tab.addEventListener('click', () => {
       tabsEl.querySelectorAll('.wx-date-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      activeDate = dateStr;
-      renderDateContent(dateStr);
+      activeDate   = dateStr;
+      activeCityKey = cityKey;
+      renderDateContent(dateStr, cityKey);
     });
     tabsEl.appendChild(tab);
   });
 
-  renderDateContent(activeDate);
+  renderDateContent(activeDate, activeCityKey);
 }
 
 // ============================================================
