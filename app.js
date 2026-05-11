@@ -6,6 +6,7 @@ const state = {
   activeDay:      0,
   days:           [],
   places:         {},
+  accommodations: [],
   editingExpId:   null,   // id of expense being edited (null = add mode)
   expenses:    [],
   loading:     true,
@@ -20,18 +21,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupModal();
   setupExpenseForm();
   renderWeather();
-  renderAccommodation();
   showLoading(true);
 
   try {
     const data = await loadAllData();
-    state.days   = data.days;
-    state.places = data.places;
+    state.days           = data.days;
+    state.places         = data.places;
+    state.accommodations = data.accommodations || CONFIG.accommodations;
     state.loading = false;
     showLoading(false);
 
     renderItinerary();
     renderKnowMore();
+    renderAccommodation();
   } catch (err) {
     state.loadError = err.message;
     showLoading(false);
@@ -743,7 +745,8 @@ function renderAccommodation() {
   if (!list) return;
   list.innerHTML = '';
 
-  CONFIG.accommodations.forEach(a => {
+  const accomList = state.accommodations.length ? state.accommodations : CONFIG.accommodations;
+  accomList.forEach(a => {
     const nightLabel = a.nights.length === 1
       ? `${a.nights[0]} 入住`
       : `${a.nights[0]} – ${a.nights[a.nights.length - 1]} 入住`;

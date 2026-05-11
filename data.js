@@ -306,13 +306,53 @@ function parseOptionalPlacesCSV(csvText) {
 }
 
 // ============================================================
+// 住宿 CSV 解析
+// 欄位：飯店名稱 | 城市 | 入住日 | 退房日 | 入住時間 | 退房時間 | 地址 | Agoda連結 | 電話 | 備註
+// ============================================================
+
+function parseAccommodationCSV(csvText) {
+  const rows = parseCSV(csvText);
+  if (rows.length < 2) return [];
+  const result = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    const col = n => (r[n] || '').trim();
+    const name        = col(0);
+    const city        = col(1);
+    const checkInDay  = col(2);  // e.g. "5/20"
+    const checkOutDay = col(3);  // e.g. "5/23"
+    const checkIn     = col(4);  // e.g. "15:00"
+    const checkOut    = col(5);  // e.g. "11:00"
+    const address     = col(6);
+    const agodaUrl    = col(7);
+    const phone       = col(8);
+    const notes       = col(9);
+    if (!name) continue;
+    // 從入住日到退房日的前一天，產生 nights 陣列
+    const nights = [];
+    if (checkInDay && checkOutDay) {
+      const [inM, inD]   = checkInDay.split('/').map(Number);
+      const [outM, outD] = checkOutDay.split('/').map(Number);
+      const cur = new Date(2026, inM - 1, inD);
+      const end = new Date(2026, outM - 1, outD);
+      while (cur < end) {
+        nights.push(`${cur.getMonth()+1}/${cur.getDate()}`);
+        cur.setDate(cur.getDate() + 1);
+      }
+    }
+    result.push({ name, city, nights, checkIn, checkOut, address, agodaUrl, phone, notes });
+  }
+  return result;
+}
+
+// ============================================================
 // 資料載入（供 app.js 呼叫）
 // ============================================================
 
 async function loadAllData() {
   const base = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=`;
 
-  const [csvItinerary, csvOptional] = await Promise.all([
+  const [csvItinerary, csvOptional, csvAccom] = await Promise.all([
     fetch(base + encodeURIComponent('行程表')).then(r => {
       if (!r.ok) throw new Error('無法載入行程表');
       return r.text();
@@ -320,16 +360,19 @@ async function loadAllData() {
     fetch(base + encodeURIComponent('檳城景點')).then(r => {
       if (!r.ok) throw new Error('無法載入景點資料');
       return r.text();
-    })
+    }),
+    fetch(base + encodeURIComponent('住宿')).then(r => r.ok ? r.text() : '').catch(() => '')
   ]);
 
-  const days   = parseItineraryCSV(csvItinerary);
-  const itinPlaces = extractPlacesFromItinerary(days);
-  const optPlaces  = parseOptionalPlacesCSV(csvOptional);
+  const days        = parseItineraryCSV(csvItinerary);
+  const itinPlaces  = extractPlacesFromItinerary(days);
+  const optPlaces   = parseOptionalPlacesCSV(csvOptional);
+  const accommodations = csvAccom ? parseAccommodationCSV(csvAccom) : CONFIG.accommodations;
 
   return {
     days,
-    places: { ...itinPlaces, ...optPlaces }
+    places: { ...itinPlaces, ...optPlaces },
+    accommodations
   };
 }
 
