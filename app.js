@@ -8,7 +8,6 @@ const state = {
   places:         {},
   editingExpId:   null,   // id of expense being edited (null = add mode)
   expenses:    [],
-  selections:  JSON.parse(localStorage.getItem('trip-selections') || '{}'),
   loading:     true,
   loadError:   null,
 };
@@ -153,15 +152,14 @@ function renderDayTimeline(day, container) {
 
   day.items.forEach((item, idx) => {
     if (!item.name && item.type === 'single') return;
-    const slotKey = `day-${day.date}-slot-${idx}`;
     const el = document.createElement('div');
     el.className = 'timeline-item';
 
     if (item.type === 'single') {
       el.innerHTML = renderSingleItem(item);
     } else {
-      el.innerHTML = renderMultiItem(item, slotKey);
-      setupMultiItemEvents(el, item, slotKey, day);
+      el.innerHTML = renderMultiItem(item);
+      setupMultiItemEvents(el);
     }
     timeline.appendChild(el);
   });
@@ -227,18 +225,14 @@ function renderSingleItem(item) {
     </div>`;
 }
 
-function renderMultiItem(item, slotKey) {
-  const selectedIdx = state.selections[slotKey] ?? -1;
-  const isDecided = selectedIdx >= 0;
-
-  const optionsHtml = (item.options || []).map((opt, i) => {
-    const isSel = selectedIdx === i;
+function renderMultiItem(item) {
+  const optionsHtml = (item.options || []).map(opt => {
     const key = opt.placeKey;
     const place = key && state.places[key];
     const nameEN = place && place.nameEN
       ? `<div class="option-name-en">${place.nameEN}</div>` : '';
     return `
-      <div class="option-item${isSel ? ' selected' : ''}">
+      <div class="option-item">
         <div class="option-dot"></div>
         <div class="option-info">
           <div class="option-name">${opt.name}</div>
@@ -247,9 +241,6 @@ function renderMultiItem(item, slotKey) {
         <div class="option-actions">
           ${opt.mapsUrl ? `<a href="${opt.mapsUrl}" target="_blank" rel="noopener" class="btn-view-place">📍</a>` : ''}
           ${place ? `<button class="btn-view-place" data-place="${key}">詳情</button>` : ''}
-          <button class="btn-select${isSel ? ' selected' : ''}" data-opt-idx="${i}">
-            ${isSel ? '✓ 選定' : '選定'}
-          </button>
         </div>
       </div>`;
   }).join('');
@@ -263,21 +254,17 @@ function renderMultiItem(item, slotKey) {
         <div class="multi-label">
           <div class="multi-time">${item.time}</div>
           <div class="multi-label-text">${item.label || ''}</div>
-          <div class="multi-badge${isDecided ? ' decided' : ''}">
-            ${isDecided
-              ? `✓ ${(item.options[selectedIdx].name || '').split('（')[0].substring(0, 12)}`
-              : `${(item.options || []).length} 個選項`}
-          </div>
+          <div class="multi-badge">${(item.options || []).length} 個選項</div>
         </div>
         <div class="multi-chevron">⌄</div>
       </div>
-      <div class="multi-options${isDecided ? ' collapsed' : ''}">
+      <div class="multi-options">
         ${noteHtml}${optionsHtml}
       </div>
     </div>`;
 }
 
-function setupMultiItemEvents(el, item, slotKey, day) {
+function setupMultiItemEvents(el) {
   const header  = el.querySelector('.multi-header');
   const options = el.querySelector('.multi-options');
   const chevron = el.querySelector('.multi-chevron');
@@ -285,18 +272,6 @@ function setupMultiItemEvents(el, item, slotKey, day) {
   header.addEventListener('click', () => {
     const collapsed = options.classList.toggle('collapsed');
     chevron.style.transform = collapsed ? '' : 'rotate(180deg)';
-  });
-
-  el.querySelectorAll('.btn-select').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const idx = parseInt(btn.dataset.optIdx);
-      const cur = state.selections[slotKey] ?? -1;
-      state.selections[slotKey] = cur === idx ? -1 : idx;
-      localStorage.setItem('trip-selections', JSON.stringify(state.selections));
-      const wrapEl = document.getElementById('timeline-wrap');
-      renderDayTimeline(day, wrapEl);
-    });
   });
 
   el.querySelectorAll('.btn-view-place[data-place]').forEach(btn => {
