@@ -771,6 +771,11 @@ function renderAccommodation() {
           <div class="accom-icon">📍</div>
           <div><span class="accom-label">地址</span><span class="accom-value">${a.address}</span></div>
         </div>
+        ${a.phone ? `
+        <div class="accom-row">
+          <div class="accom-icon">📞</div>
+          <div><span class="accom-label">聯絡</span><span class="accom-value">${a.phone}</span></div>
+        </div>` : ''}
         ${a.notes ? `
         <div class="accom-row">
           <div class="accom-icon">📝</div>

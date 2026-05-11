@@ -18,24 +18,26 @@ const CONFIG = {
   // 住宿資訊
   accommodations: [
     {
-      name: '【待填入】檳城飯店',
-      nights: ['5/20', '5/21'],
+      name: 'Le Jardin Suite',
+      nights: ['5/20', '5/21', '5/22'],
       city: '檳城',
       checkIn: '15:00',
-      checkOut: '12:00',
-      address: '【待填入】飯店地址',
-      agodaUrl: '',
-      notes: '訂房確認號：待填入'
+      checkOut: '11:00',
+      address: '1, Lintang Hajjah Rehmah 1, Jelutong, 11600 George Town, Pulau Pinang',
+      agodaUrl: 'https://www.agoda.com/zh-tw/le-jardin-suite-8-pax-sea-view-infinity-pool/hotel/penang-my.html',
+      phone: '+6016-523 5915 (Mr. Ng)　+6011-6984 2043 (Ms. Ivy)',
+      notes: '泳池使用時間：07:00–10:00'
     },
     {
-      name: '【待填入】吉隆坡飯店',
-      nights: ['5/22', '5/23'],
+      name: 'Urban360 Trio Suite by La Ritz',
+      nights: ['5/23'],
       city: '吉隆坡',
       checkIn: '15:00',
-      checkOut: '12:00',
-      address: '【待填入】飯店地址',
-      agodaUrl: '',
-      notes: '訂房確認號：待填入'
+      checkOut: '11:00',
+      address: 'A-9-10, Jalan Makmur, Taman Sri Gombak, 68100 Batu Caves, Selangor',
+      agodaUrl: 'https://www.agoda.com/zh-tw/urban360-trio-suite-by-la-ritz/hotel/kuala-lumpur-my.html',
+      phone: '+60123239670',
+      notes: ''
     }
   ],
 
