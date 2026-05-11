@@ -741,20 +741,118 @@ const PLACE_ENRICHMENT = {
 
   // ── 怡保 ──────────────────────────────────────────────────
   '霹靂洞': {
-    nameEN: 'Gua Perak / Perak Cave Temple',
-    intro: '怡保南部著名的石灰岩洞佛廟，洞內供奉逾 40 尊大小佛像，鐘乳石與石筍在香火燈光映照下呈現神秘氛圍。洞口有一座三層樓高的老虎雕像，頗具特色。洞後設有登山步道，可俯瞰怡保城市景色，是探索怡保石灰岩地形的好起點。'
+    nameEN: 'Sam Poh Tong Cave Temple',
+    intro: '怡保南部著名的石灰岩洞佛廟，洞內供奉逾 40 尊大小佛像，鐘乳石與石筍在香火燈光映照下呈現神秘氛圍。洞口有一座三層樓高的老虎雕像，頗具特色。洞後設有登山步道，可俯瞰怡保城市景色，是探索怡保石灰岩地形的好起點。',
+    mapsUrl: 'https://maps.google.com/?q=Sam+Poh+Tong+Cave+Temple+Ipoh'
   },
   '老黃/安記芽菜雞': {
     nameEN: 'Lou Wong / Onn Kee Bean Sprout Chicken (Nga Choy Kai)',
-    intro: '怡保芽菜雞（Nga Choy Kai）是全馬最受推崇的在地美食之一，關鍵在於怡保特有的甘甜地下水——豆芽因此水分飽滿脆嫩，雞肉油滑鮮嫩得恰到好處。老黃（Lou Wong）與安記（Onn Kee）兩家名店相距不到百米，數十年來食客爭論不休各有擁護，建議各點一份親自評判。通常搭配白飯與怡保白咖啡，是此行不可錯過的組合。'
+    intro: '怡保芽菜雞（Nga Choy Kai）是全馬最受推崇的在地美食之一，關鍵在於怡保特有的甘甜地下水——豆芽因此水分飽滿脆嫩，雞肉油滑鮮嫩得恰到好處。老黃（Lou Wong）與安記（Onn Kee）兩家名店相距不到百米，數十年來食客爭論不休各有擁護，建議各點一份親自評判。',
+    mapsUrl: 'https://maps.google.com/?q=Lou+Wong+Bean+Sprout+Chicken+Ipoh'
   },
   '南香白咖啡（must 外帶）': {
-    nameEN: 'Nam Heong White Coffee (Must Take Away)',
-    intro: '白咖啡（White Coffee）由怡保發明，以低溫烘焙咖啡豆加淡奶和糖調製，口感甘醇少苦澀。南香（Nam Heong）創立於 1952 年，是怡保最古老的白咖啡店之一，蛋塔（Dan Tat）外皮酥脆、內餡嫩滑，與白咖啡是絕配，建議外帶一杯在路上慢慢喝。'
+    nameEN: 'Nam Heong White Coffee (Take Away)',
+    intro: '白咖啡（White Coffee）由怡保發明，以低溫烘焙咖啡豆加淡奶和糖調製，口感甘醇少苦澀。南香（Nam Heong）創立於 1952 年，是怡保最古老的白咖啡店之一，蛋塔外皮酥脆、內餡嫩滑，與白咖啡是絕配，建議外帶一杯在路上慢慢喝。',
+    mapsUrl: 'https://maps.google.com/?q=Nam+Heong+White+Coffee+Ipoh'
+  },
+  '南香白咖啡（外帶）': {
+    nameEN: 'Nam Heong White Coffee (Take Away)',
+    intro: '白咖啡（White Coffee）由怡保發明，以低溫烘焙咖啡豆加淡奶和糖調製，口感甘醇少苦澀。南香（Nam Heong）創立於 1952 年，是怡保最古老的白咖啡店之一，蛋塔外皮酥脆、內餡嫩滑，與白咖啡是絕配，建議外帶一杯在路上慢慢喝。',
+    mapsUrl: 'https://maps.google.com/?q=Nam+Heong+White+Coffee+Ipoh'
+  },
+  '南香白咖啡': {
+    nameEN: 'Nam Heong White Coffee',
+    intro: '白咖啡（White Coffee）由怡保發明，以低溫烘焙咖啡豆加淡奶和糖調製，口感甘醇少苦澀。南香（Nam Heong）創立於 1952 年，是怡保最古老的白咖啡店之一，蛋塔外皮酥脆、內餡嫩滑，與白咖啡是絕配。',
+    mapsUrl: 'https://maps.google.com/?q=Nam+Heong+White+Coffee+Ipoh'
   },
   '天津茶室燉蛋（must 外帶）': {
-    nameEN: 'Thean Chun Kopitiam – Steamed Egg Custard & Chicken Noodle',
-    intro: '天津茶室（Thean Chun）的焦糖燉蛋（Custard Egg）是怡保代表性甜品，以新鮮雞蛋、牛奶與糖慢火蒸製，表面呈琥珀焦糖色，口感如布丁般細滑，甜而不膩。招牌雞絲河粉（Kai Si Hor Fun）以清雞湯搭配手撕嫩雞絲，湯底清鮮，是怡保早餐的另一代表。人氣極旺，可能需等候。'
+    nameEN: 'Thean Chun Kopitiam – Steamed Egg Custard',
+    intro: '天津茶室（Thean Chun）的焦糖燉蛋（Custard Egg）是怡保代表性甜品，以新鮮雞蛋、牛奶與糖慢火蒸製，表面呈琥珀焦糖色，口感如布丁般細滑，甜而不膩。招牌雞絲河粉以清雞湯搭配手撕嫩雞絲，湯底清鮮，是怡保早餐的另一代表。',
+    mapsUrl: 'https://maps.google.com/?q=Thean+Chun+Kopitiam+Ipoh'
+  },
+  '天津茶室燉蛋（外帶）': {
+    nameEN: 'Thean Chun Kopitiam – Steamed Egg Custard (Take Away)',
+    intro: '天津茶室（Thean Chun）的焦糖燉蛋（Custard Egg）是怡保代表性甜品，以新鮮雞蛋、牛奶與糖慢火蒸製，表面呈琥珀焦糖色，口感如布丁般細滑，甜而不膩。招牌雞絲河粉以清雞湯搭配手撕嫩雞絲，湯底清鮮，是怡保早餐的另一代表。',
+    mapsUrl: 'https://maps.google.com/?q=Thean+Chun+Kopitiam+Ipoh'
+  },
+  '天津茶室燉蛋': {
+    nameEN: 'Thean Chun Kopitiam – Steamed Egg Custard',
+    intro: '天津茶室（Thean Chun）的焦糖燉蛋（Custard Egg）是怡保代表性甜品，以新鮮雞蛋、牛奶與糖慢火蒸製，表面呈琥珀焦糖色，口感如布丁般細滑，甜而不膩。招牌雞絲河粉以清雞湯搭配手撕嫩雞絲，湯底清鮮，是怡保早餐的另一代表。',
+    mapsUrl: 'https://maps.google.com/?q=Thean+Chun+Kopitiam+Ipoh'
+  },
+
+  // ── 吉隆坡：補充 ──────────────────────────────────────────
+  '興記肉骨茶': {
+    nameEN: 'Hing Kee Bak Kut Teh',
+    intro: '肉骨茶（Bak Kut Teh）以豬肋骨加黨參、枸杞、當歸等藥材長時間燉煮，湯頭濃郁、藥香撲鼻、肉質軟嫩骨肉分離。興記為知名老字號，搭配白飯、油條與普洱茶食用，是往返吉隆坡與檳城途中補身的好選擇。',
+    mapsUrl: 'https://maps.google.com/?q=興記肉骨茶+Selangor+Malaysia'
+  },
+  'Wah Tsai Seafood': {
+    nameEN: 'Wah Tsai Seafood Restaurant',
+    intro: '馬來西亞海鮮餐廳以生猛活海鮮著稱，常見料理包括辣椒炒蟹、黑椒蟹、奶油蟹與蒜蓉蝦，現點現炒鑊氣十足。Wah Tsai 食材新鮮、份量實在，適合多人分享，是往檳城路途中犒勞自己的美味中繼站。',
+    mapsUrl: 'https://maps.google.com/?q=Wah+Tsai+Seafood+Selangor+Malaysia'
+  },
+  'Pavillion': {
+    nameEN: 'Pavilion Kuala Lumpur',
+    intro: '武吉免登核心地帶的旗艦購物商場，2007 年開幕，是吉隆坡最高端的零售目的地之一。地下一樓「東京街」引進超過 90 個日韓品牌，頂層美食廣場雲集亞洲各地美食，中庭露天廣場定期舉辦藝術裝置展演，既是購物殿堂，也是感受 KL 時尚脈搏的最佳地點。',
+    mapsUrl: 'https://maps.google.com/?q=Pavilion+KL+Bukit+Bintang'
+  },
+  'Berjaya Times Square': {
+    nameEN: 'Berjaya Times Square',
+    intro: '全球最大購物商場之一，設有超過 1,000 家商店、室內主題樂園（含雙環形過山車「Supersonic Odyssey」）、電影院與美食廣場。以平價商品、電子產品與各式本地街頭美食著稱，是吉隆坡掃貨血拼的平民天堂。',
+    mapsUrl: 'https://maps.google.com/?q=Berjaya+Times+Square+Kuala+Lumpur'
+  },
+  'Lalaport': {
+    nameEN: 'LaLaport BBCC',
+    intro: '日本三井不動產在馬來西亞開設的首個 LaLaport 購物中心，2021 年開幕於武吉免登商業城（BBCC）。引進超過 300 個日本品牌，包括 Nitori、GU 與各式日式餐廳，5 樓頂層室外廣場可眺望 KLCC 雙峰塔，是日系品牌愛好者的必訪之地。',
+    mapsUrl: 'https://maps.google.com/?q=LaLaport+BBCC+Kuala+Lumpur'
+  },
+  'KLCC Twin Tower': {
+    nameEN: 'Petronas Twin Towers (KLCC)',
+    intro: '由阿根廷建築師 César Pelli 設計，1998 年落成時是全球最高建築，高達 452 公尺，至今仍是世界最高雙塔。外觀以伊斯蘭幾何美學為靈感，41、42 樓間的空中天橋（Skybridge）是熱門打卡點。夜間燈光亮起後，雙塔倒影映入 KLCC 公園水池，是吉隆坡最具代表性的夜景。',
+    mapsUrl: 'https://maps.google.com/?q=Petronas+Twin+Towers+Kuala+Lumpur'
+  },
+  '1 Utama': {
+    nameEN: '1 Utama Shopping Centre',
+    intro: '位於八打靈再也（Petaling Jaya）的超大型購物中心，全馬最大、全球前十大，設有 700 餘家商店、超市、電影院、攀岩場與室內熱帶雨林「The Rainforest」。商場設計以新舊兩棟連接，匯集時尚、美食與娛樂，是吉隆坡近郊最完整的一站式購物體驗。',
+    mapsUrl: 'https://maps.google.com/?q=1+Utama+Shopping+Centre+Petaling+Jaya'
+  },
+  'Banana Leaf Rice': {
+    nameEN: 'Banana Leaf Rice (South Indian Cuisine)',
+    intro: '蕉葉飯是南印度料理文化的精髓，以大片香蕉葉替代餐盤盛裝白飯，周圍擺上多種咖哩、酸辣小菜（Rasam、Sambar）與酥炸豆餅（Papadum），用手抓食最為道地。食畢把蕉葉往內折代表「吃飽滿意」，往外折則暗示食物不合口味——這是當地飲食禮儀之一，切記別搞錯方向。',
+    mapsUrl: 'https://maps.google.com/?q=banana+leaf+rice+Brickfields+Kuala+Lumpur'
+  },
+
+  // ── 檳城：補充 ──────────────────────────────────────────
+  'Rifle Range (Padang Tembak)': {
+    nameEN: 'Rifle Range Road Hawker Centre',
+    intro: '射靶場路（Rifle Range Rd）是檳城最著名的老字號美食聚落之一，以炒粿條、蝦麵、咖哩麵與道地甜品聞名在地人圈子。早餐至午市人潮絡繹不絕，遠離觀光景點的地理位置讓這裡保留了最純粹的在地飲食氣氛，是老饕級的隱藏版必訪地。',
+    mapsUrl: 'https://maps.google.com/?q=Rifle+Range+Road+Hawker+Centre+Penang'
+  },
+  '浮羅山背': {
+    nameEN: 'Balik Pulau',
+    intro: '浮羅山背位於檳島西南部，是檳城最原始的農業鄉鎮，以種植榴槤、山竹與熱帶水果聞名，被譽為「全馬最甜榴槤的產地」。曲折山路帶領旅人進入果林與漁村交織的田園風光，老街上傳統咖啡店與廟宇靜靜訴說著另一種檳城節奏，是尋找慢生活的絕佳去處。',
+    mapsUrl: 'https://maps.google.com/?q=Balik+Pulau+Penang'
+  },
+  'Ferringhi Heart Beach Club': {
+    nameEN: 'Ferringhi Heart Beach Club',
+    intro: '峇都丁宜沙灘旁的沙灘俱樂部，以輕鬆戶外氛圍結合現場 DJ 音樂聞名，是年輕旅人日落後的熱門聚集地。可在沙灘椅上小酌欣賞海景，夜晚氣氛歡樂熱鬧，是峇都丁宜最具活力的夜生活選擇之一。',
+    mapsUrl: 'https://maps.google.com/?q=Ferringhi+Heart+Beach+Club+Penang'
+  },
+  'BoraBora': {
+    nameEN: 'Bora Ombak Bar & Restaurant',
+    intro: '峇都丁宜沙灘邊的知名沙灘酒吧，戶外座位直面海景，可聽著海浪聲用餐小酌。氛圍輕鬆隨性（chill out），供應西式輕食與各式雞尾酒，是日落後放鬆身心的絕佳場所，夜間燭光搖曳格外浪漫。',
+    mapsUrl: 'https://maps.google.com/?q=Bora+Ombak+Batu+Ferringhi+Penang'
+  },
+  'The Ship': {
+    nameEN: 'The Ship Restaurant (Batu Ferringhi)',
+    intro: '檳城老牌西餐廳，以巨型木製帆船外觀聞名，是峇都丁宜沙灘的地標性建築之一。供應牛排、海鮮與各式西式料理，環境寬敞、氣氛復古，曾是許多本地人慶祝紀念日的首選餐廳。',
+    mapsUrl: 'https://maps.google.com/?q=The+Ship+Restaurant+Batu+Ferringhi+Penang'
+  },
+  "Andrew's Kampung": {
+    nameEN: "Andrew's Kampung Restaurant",
+    intro: '隱藏在峇都丁宜街邊的平價在地餐廳，以正宗馬來風味料理著稱，包括椰奶燉牛肉（Rendang）、沙爹串燒與各式馬來咖哩，份量大且價格親民，是遊客口耳相傳的隱藏版好去處。',
+    mapsUrl: 'https://maps.google.com/?q=Andrews+Kampung+Batu+Ferringhi+Penang'
   }
 };
 
