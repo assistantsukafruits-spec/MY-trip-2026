@@ -427,7 +427,7 @@ const PLACE_ENRICHMENT = {
     intro: '店名本身就是一幅馬來西亞縮影：馬來人 Ali、印度人 Muthu 與華人 Ah Hock，三種族共事一室，象徵國家精神。供應道地早餐，包括椰漿飯（Nasi Lemak）、各式咖椰吐司與半熟蛋，是感受多元飲食文化的最佳起點。'
   },
   'Yut Kee Restaurant': {
-    nameEN: '粵記茶室',
+    nameEN: '鎰記茶餐室',
     intro: '創立於 1928 年的老字號海南茶室，是吉隆坡歷史最悠久的早餐名店之一，近百年來口味幾乎未曾改變。招牌豬肉卷（Roti Babi）以麵包裹豬肉餡油炸而成，外酥內嫩；薄煎餅（Hainanese Toast）與海南咖啡亦是必點，感受老吉隆坡的平靜晨間氛圍。'
   },
   'Ho Kow Hainam Kopitiam': {
@@ -793,8 +793,8 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=Mid+Valley+Megamall+Kuala+Lumpur'
   },
   '良記肉骨茶': {
-    nameEN: 'Leong Kee Bak Kut Teh',
-    intro: '肉骨茶（Bak Kut Teh）是馬來西亞華人傳承自碼頭苦力的補身藥膳湯，以豬肋骨加黨參、枸杞、當歸等藥材長時間燉煮，湯頭藥香濃郁、肉質軟嫩。良記為在地口碑老店，湯底層次豐富，搭配白飯、炸油條與普洱茶食用，是前往檳城途中最值得停靠的一頓補身好料。',
+    nameEN: 'Lieong Kee Bak Kut Teh',
+    intro: '坐落於巴生的老字號肉骨茶店，以濃郁藥材湯底著稱——黨參、枸杞、當歸慢火長燉，豬肋骨入口即離骨，藥香沉穩不嗆鼻。巴生是馬來西亞肉骨茶的發源地，良記正是其中最受本地人推薦的一間，不少人從 KL 專程驅車前往。搭配炸油條、白飯與普洱茶，風味完整。',
     mapsUrl: 'https://maps.google.com/?q=良記肉骨茶+Selangor+Malaysia'
   },
   '興記肉骨茶': {
