@@ -350,7 +350,8 @@ function parseAccommodationCSV(csvText) {
 // ============================================================
 
 async function loadAllData() {
-  const base = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=`;
+  const t = Date.now();
+  const base = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&t=${t}&sheet=`;
 
   const [csvItinerary, csvOptional, csvAccom] = await Promise.all([
     fetch(base + encodeURIComponent('行程表')).then(r => {
