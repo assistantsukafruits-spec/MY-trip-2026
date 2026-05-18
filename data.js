@@ -423,7 +423,7 @@ const PLACE_ENRICHMENT = {
 
   // ── 吉隆坡 ────────────────────────────────────────────────
   'Ali, Muthu & Ah Hock @ Dang Wangi': {
-    nameEN: '三族共和茶室（Ali, Muthu & Ah Hock）',
+    nameEN: 'Ali, Muthu & Ah Hock Restaurant',
     intro: '店名本身就是一幅馬來西亞縮影：馬來人 Ali、印度人 Muthu 與華人 Ah Hock，三種族共事一室，象徵國家精神。供應道地早餐，包括椰漿飯（Nasi Lemak）、各式咖椰吐司與半熟蛋，是感受多元飲食文化的最佳起點。'
   },
   'Yut Kee Restaurant': {
@@ -497,7 +497,7 @@ const PLACE_ENRICHMENT = {
     intro: '在地人深夜最愛的咖哩麵攤，以椰奶、辣椒、蝦膏與香料慢火熬製的濃郁湯底為特色，配上燙熟的米線、豆腐卜、蛤蜊與炸豆皮，份量紮實，深夜吃來格外滿足。'
   },
   'Mamak': {
-    nameEN: '印度穆斯林餐廳',
+    nameEN: 'Indian-Muslim Restaurant',
     intro: 'Mamak 是馬來西亞印度穆斯林餐廳的通稱，24 小時全年無休，提供拋餅（Roti Canai）、煎蕊（Mee Goreng Mamak）、拉茶（Teh Tarik）等庶民美食，是各族馬來西亞人深夜相聚的共同回憶。點一杯泡沫豐厚的拉茶，體驗最道地的 MY 宵夜文化。'
   },
   '多春茶室': {
@@ -541,7 +541,7 @@ const PLACE_ENRICHMENT = {
     intro: '升旗山（Bukit Bendera）海拔 830 公尺，是馬來西亞最古老的山岳觀光地，英殖民時期（1897 年）即開發為避暑勝地。現代化纜車全程約 5 分鐘，是東南亞最陡的軌道電車之一，斜度達 42 度。山頂氣溫比山下低約 5°C，天氣晴朗時可俯瞰整個喬治市、檳城橋與遠處的吉打州。設有步行道、觀景台與咖啡廳，傍晚夜景尤為壯觀。'
   },
   'The Habitat': {
-    nameEN: '自然棲境',
+    nameEN: 'The Habitat Penang Hill',
     intro: '升旗山山頂的生態體驗步道，穿越超過 130 年歷史的原始山頂雲霧林，全長約 1.6 公里。最大亮點是「Curtis Crest」——全馬最高的樹冠吊橋，懸掛於地面 8 公尺上方，在微風搖晃中踏行林冠之上，視野一望無際，既震撼又療癒。步道沿途可觀察珍稀植物、昆蟲與山鳥，是升旗山最值得加購的自然體驗。'
   },
   '阿依淡福建麵': {
@@ -569,15 +569,15 @@ const PLACE_ENRICHMENT = {
     intro: '峇都丁宜（Batu Ferringhi）是檳城島最著名的海灘度假區，北岸沙岸線長達數公里，老牌國際飯店與小型渡假村並立，海水清澈、棕櫚樹成蔭。傍晚夕陽西下沙灘呈橘紅暖調，是拍照最美的時段；天黑後夜市攤位出沒，販售手工藝品與各式小食，呈現截然不同的熱鬧夜晚景象。'
   },
   'Bora': {
-    nameEN: '波拉海灘酒吧',
+    nameEN: 'Bora Ombak',
     intro: '峇都丁宜沙灘邊的知名沙灘酒吧，戶外座位直面海景，可聽海浪聲用餐。氛圍輕鬆隨性（chill out），供應西式輕食與各式雞尾酒，是日落後放鬆身心的絕佳場所，夜間燭光搖曳格外浪漫。'
   },
   'The': {
-    nameEN: '帆船西餐廳',
+    nameEN: 'The Ship Restaurant',
     intro: '檳城老牌西餐廳，以巨型木製帆船外觀聞名，是峇都丁宜沙灘的地標性建築之一。供應牛排、海鮮與各式西式料理，環境寬敞、氣氛復古，曾是許多本地人慶祝紀念日的首選。'
   },
   "Andrew's": {
-    nameEN: '安德魯廚房',
+    nameEN: "Andrew's Kitchen",
     intro: '隱藏在峇都丁宜街邊的平價在地餐廳，以正宗馬來風味料理著稱，包括椰奶燉牛肉（Rendang）、沙爹串燒與各式馬來咖哩，份量大且價格親民，是遊客口耳相傳的隱藏版好去處。'
   },
   '興巴士藝文倉庫': {
@@ -585,7 +585,7 @@ const PLACE_ENRICHMENT = {
     intro: '由廢棄公車停車場改建而成的文創藝術空間，保留工業感的高挑鋼架屋頂，內外牆面佈滿國際知名街頭藝術家的巨幅壁畫。現為文創市集、藝術展覽、獨立咖啡廳與精釀酒吧的複合場所，週末有市集與現場音樂，是喬治市最具活力的文青聚集地。'
   },
   'Auntie': {
-    nameEN: '阿姨娘惹菜（米其林一星）',
+    nameEN: "Auntie Gaik Lean's (Michelin 1★)",
     intro: '米其林一星娘惹菜餐廳，主廚 Gaik Lean 以傳承自外婆的家傳秘方烹製土生華人（Peranakan）料理，包括娘惹叻沙、豬蹄醋（Pig Trotter Vinegar）與各式娘惹糕點，風味正宗且精緻。餐廳設於老式店屋中，每日食材限量，建議提早訂位。'
   },
   'Kimberley Lane 漫遊': {
@@ -733,7 +733,7 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=fried+banana+Jalan+Dato+Keramat+Penang'
   },
   'Narrow Marrow': {
-    nameEN: '文青甜點咖啡館',
+    nameEN: 'Narrow Marrow Café',
     address: '312 Lebuh Pantai (Beach Street), George Town',
     intro: '由本地藝術家 Alvin 與 Jamie 於 2014 年創立，從一個讓創意朋友聚會的小空間，逐漸成為喬治市文青圈最知名的咖啡甜點小館。招牌 Espresso Kahlua Tiramisu、椰糖鹹焦糖烤乾酪蛋糕皆融入在地食材風味，店內定期舉辦藝術展覽、現場音樂與詩歌朗誦，是感受喬治市當代創意氛圍的必訪空間。',
     mapsUrl: 'https://maps.google.com/?q=Narrow+Marrow+312+Lebuh+Pantai+Penang'
@@ -783,7 +783,7 @@ const PLACE_ENRICHMENT = {
 
   // ── 吉隆坡：補充 ──────────────────────────────────────────
   'Mansion Tea Stall Al-Amna Restaurant': {
-    nameEN: '粉紅清真寺旁 Al-Amna 餐廳',
+    nameEN: 'Al-Amna Restaurant',
     intro: '位於布城（Putrajaya）粉紅清真寺旁的知名 Mamak 餐廳，以馬來式早餐聞名，供應拋餅（Roti Canai）、椰漿飯（Nasi Lemak）與各式印度麵食。參觀粉紅清真寺前後在此用餐，是當地居民與旅客共同喜愛的停歇地點，份量實在、價格親民，氣氛悠閒。',
     mapsUrl: 'https://maps.google.com/?q=Al-Amna+Restaurant+Putrajaya'
   },
@@ -813,7 +813,7 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=Pavilion+KL+Bukit+Bintang'
   },
   'Berjaya Times Square': {
-    nameEN: '陽光廣場',
+    nameEN: 'Berjaya Times Square',
     intro: '全球最大購物商場之一，設有超過 1,000 家商店、室內主題樂園（含雙環形過山車「Supersonic Odyssey」）、電影院與美食廣場。以平價商品、電子產品與各式本地街頭美食著稱，是吉隆坡掃貨血拼的平民天堂。',
     mapsUrl: 'https://maps.google.com/?q=Berjaya+Times+Square+Kuala+Lumpur'
   },
@@ -828,7 +828,7 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=Petronas+Twin+Towers+Kuala+Lumpur'
   },
   '1 Utama': {
-    nameEN: '一烏達瑪購物中心',
+    nameEN: '1 Utama Shopping Centre',
     intro: '位於八打靈再也（Petaling Jaya）的超大型購物中心，全馬最大、全球前十大，設有 700 餘家商店、超市、電影院、攀岩場與室內熱帶雨林「The Rainforest」。商場設計以新舊兩棟連接，匯集時尚、美食與娛樂，是吉隆坡近郊最完整的一站式購物體驗。',
     mapsUrl: 'https://maps.google.com/?q=1+Utama+Shopping+Centre+Petaling+Jaya'
   },
@@ -850,12 +850,12 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=Balik+Pulau+Penang'
   },
   'Ferringhi Heart Beach Club': {
-    nameEN: '峇都丁宜海灘俱樂部',
+    nameEN: 'Ferringhi Heart Beach Club',
     intro: '峇都丁宜沙灘旁的沙灘俱樂部，以輕鬆戶外氛圍結合現場 DJ 音樂聞名，是年輕旅人日落後的熱門聚集地。可在沙灘椅上小酌欣賞海景，夜晚氣氛歡樂熱鬧，是峇都丁宜最具活力的夜生活選擇之一。',
     mapsUrl: 'https://maps.google.com/?q=Ferringhi+Heart+Beach+Club+Penang'
   },
   'BoraBora': {
-    nameEN: '波拉海灘酒吧',
+    nameEN: 'Bora Ombak',
     intro: '峇都丁宜沙灘邊的知名沙灘酒吧，戶外座位直面海景，可聽著海浪聲用餐小酌。氛圍輕鬆隨性（chill out），供應西式輕食與各式雞尾酒，是日落後放鬆身心的絕佳場所，夜間燭光搖曳格外浪漫。',
     mapsUrl: 'https://maps.google.com/?q=Bora+Ombak+Batu+Ferringhi+Penang'
   },
@@ -865,7 +865,7 @@ const PLACE_ENRICHMENT = {
     mapsUrl: 'https://maps.google.com/?q=The+Ship+Restaurant+Batu+Ferringhi+Penang'
   },
   "Andrew's Kampung": {
-    nameEN: '安德魯甘榜餐廳',
+    nameEN: "Andrew's Kampung",
     intro: '隱藏在峇都丁宜街邊的平價在地餐廳，以正宗馬來風味料理著稱，包括椰奶燉牛肉（Rendang）、沙爹串燒與各式馬來咖哩，份量大且價格親民，是遊客口耳相傳的隱藏版好去處。',
     mapsUrl: 'https://maps.google.com/?q=Andrews+Kampung+Batu+Ferringhi+Penang'
   }
