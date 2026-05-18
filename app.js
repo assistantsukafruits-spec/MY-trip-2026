@@ -206,6 +206,24 @@ function renderItineraryPlaces(container) {
   if (inp) inp.addEventListener('input', e => renderGrid(e.target.value));
 }
 
+// 根據 URL 來源產生對應 icon 的連結按鈕
+function makeLinkBtn(url, cssClass, short) {
+  if (!url) return '';
+  let icon, label;
+  if (/maps\.google|goo\.gl\/maps|maps\.app\.goo/i.test(url)) {
+    icon = '📍'; label = short ? '' : ' 地圖';
+  } else if (/instagram\.com|instagr\.am/i.test(url)) {
+    icon = '📸'; label = short ? '' : ' IG';
+  } else if (/facebook\.com|fb\.com/i.test(url)) {
+    icon = '📘'; label = short ? '' : ' FB';
+  } else if (/tripadvisor/i.test(url)) {
+    icon = '⭐'; label = short ? '' : ' TA';
+  } else {
+    icon = '🔗'; label = short ? '' : ' 連結';
+  }
+  return `<a href="${url}" target="_blank" rel="noopener" class="${cssClass}">${icon}${label}</a>`;
+}
+
 function renderSingleItem(item) {
   const key = item.placeKey;
   const place = key && state.places[key];
@@ -220,7 +238,7 @@ function renderSingleItem(item) {
           <div class="timeline-name">${item.name}</div>
           ${nameEN}
           ${item.note ? `<div class="timeline-note">${item.note}</div>` : ''}
-          ${item.mapsUrl ? `<a href="${item.mapsUrl}" target="_blank" rel="noopener" class="timeline-link-btn">📍 地圖</a>` : ''}
+          ${makeLinkBtn(item.mapsUrl || (place && place.mapsUrl), 'timeline-link-btn', false)}
           ${place ? `<button class="timeline-link-btn" data-place="${key}">查看詳情 →</button>` : ''}
         </div>
       </div>
@@ -241,7 +259,7 @@ function renderMultiItem(item) {
           ${nameEN}
         </div>
         <div class="option-actions">
-          ${opt.mapsUrl ? `<a href="${opt.mapsUrl}" target="_blank" rel="noopener" class="btn-view-place">📍</a>` : ''}
+          ${makeLinkBtn(opt.mapsUrl || (place && place.mapsUrl), 'btn-view-place', true)}
           ${place ? `<button class="btn-view-place" data-place="${key}">詳情</button>` : ''}
         </div>
       </div>`;

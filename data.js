@@ -782,6 +782,21 @@ const PLACE_ENRICHMENT = {
   },
 
   // ── 吉隆坡：補充 ──────────────────────────────────────────
+  'Mansion Tea Stall Al-Amna Restaurant': {
+    nameEN: 'Al-Amna Restaurant (Mansion Tea Stall)',
+    intro: '位於布城（Putrajaya）粉紅清真寺旁的知名 Mamak 餐廳，以馬來式早餐聞名，供應拋餅（Roti Canai）、椰漿飯（Nasi Lemak）與各式印度麵食。參觀粉紅清真寺前後在此用餐，是當地居民與旅客共同喜愛的停歇地點，份量實在、價格親民，氣氛悠閒。',
+    mapsUrl: 'https://maps.google.com/?q=Al-Amna+Restaurant+Putrajaya'
+  },
+  'Mid Valley': {
+    nameEN: 'Mid Valley Megamall',
+    intro: '1999 年開幕的Mid Valley Megamall 是吉隆坡最受歡迎的大型購物中心之一，設有超過 430 家商店、電影院、超市與各類餐廳，交通便利（KTM 火車站直達）。毗鄰的 The Gardens Mall 走高端路線，兩棟商場以空橋相連，一次逛齊平價與精品，是吉隆坡最完整的複合購物體驗之一。',
+    mapsUrl: 'https://maps.google.com/?q=Mid+Valley+Megamall+Kuala+Lumpur'
+  },
+  '良記肉骨茶': {
+    nameEN: 'Leong Kee Bak Kut Teh',
+    intro: '肉骨茶（Bak Kut Teh）是馬來西亞華人傳承自碼頭苦力的補身藥膳湯，以豬肋骨加黨參、枸杞、當歸等藥材長時間燉煮，湯頭藥香濃郁、肉質軟嫩。良記為在地口碑老店，湯底層次豐富，搭配白飯、炸油條與普洱茶食用，是前往檳城途中最值得停靠的一頓補身好料。',
+    mapsUrl: 'https://maps.google.com/?q=良記肉骨茶+Selangor+Malaysia'
+  },
   '興記肉骨茶': {
     nameEN: 'Hing Kee Bak Kut Teh',
     intro: '肉骨茶（Bak Kut Teh）以豬肋骨加黨參、枸杞、當歸等藥材長時間燉煮，湯頭濃郁、藥香撲鼻、肉質軟嫩骨肉分離。興記為知名老字號，搭配白飯、油條與普洱茶食用，是往返吉隆坡與檳城途中補身的好選擇。',
