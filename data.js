@@ -826,7 +826,7 @@ const PLACE_ENRICHMENT = {
   'KLCC Twin Tower': {
     nameEN: '國家石油雙峰塔',
     intro: '由阿根廷建築師 César Pelli 設計，1998 年落成時是全球最高建築，高達 452 公尺，至今仍是世界最高雙塔。外觀以伊斯蘭幾何美學為靈感，41、42 樓間的空中天橋（Skybridge）是熱門打卡點。夜間燈光亮起後，雙塔倒影映入 KLCC 公園水池，是吉隆坡最具代表性的夜景。',
-    mapsUrl: 'https://maps.google.com/?q=Petronas+Twin+Towers+Kuala+Lumpur'
+    mapsUrl: 'https://maps.google.com/maps?q=3.157955,101.711832'
   },
   '1 Utama': {
     nameEN: '1 Utama Shopping Centre',
