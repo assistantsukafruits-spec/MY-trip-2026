@@ -1165,3 +1165,11 @@ ul { list-style: none; }
   .bottom-nav { left: 50%; transform: translateX(-50%); }
   .modal-card { max-width: 480px; margin: 0 auto; }
 }
+
+/* ============================================================
+   Share mode: hide expenses tab & section
+   ============================================================ */
+[data-share] .nav-item[data-tab="expenses"],
+[data-share] #tab-expenses {
+  display: none !important;
+}

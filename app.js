@@ -23,11 +23,7 @@ const state = {
 // ============================================================
 document.addEventListener('DOMContentLoaded', async () => {
   if (SHARE_MODE) {
-    // Hide expenses tab from nav and section
-    const expNav = document.querySelector('.nav-item[data-tab="expenses"]');
-    if (expNav) expNav.style.display = 'none';
-    const expSection = document.getElementById('tab-expenses');
-    if (expSection) expSection.style.display = 'none';
+    document.documentElement.setAttribute('data-share', '1');
   }
 
   setupNavigation();
