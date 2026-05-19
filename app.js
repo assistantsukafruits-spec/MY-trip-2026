@@ -1,4 +1,9 @@
 // ============================================================
+// Share Mode (hide expenses tab; weather defaults to KL real-time)
+// ============================================================
+const SHARE_MODE = new URLSearchParams(window.location.search).has('share');
+
+// ============================================================
 // App State
 // ============================================================
 const state = {
@@ -17,9 +22,17 @@ const state = {
 // Init
 // ============================================================
 document.addEventListener('DOMContentLoaded', async () => {
+  if (SHARE_MODE) {
+    // Hide expenses tab from nav and section
+    const expNav = document.querySelector('.nav-item[data-tab="expenses"]');
+    if (expNav) expNav.style.display = 'none';
+    const expSection = document.getElementById('tab-expenses');
+    if (expSection) expSection.style.display = 'none';
+  }
+
   setupNavigation();
   setupModal();
-  setupExpenseForm();
+  if (!SHARE_MODE) setupExpenseForm();
   renderWeather();
   showLoading(true);
 
@@ -40,8 +53,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     showLoadError(err.message);
   }
 
-  state.expenses = await apiGetExpenses();
-  renderExpenses();
+  if (!SHARE_MODE) {
+    state.expenses = await apiGetExpenses();
+    renderExpenses();
+  }
 });
 
 // ============================================================
@@ -886,7 +901,7 @@ async function renderWeather() {
 
   let dataMap = {};
   try {
-    if (tripMode) {
+    if (tripMode || SHARE_MODE) {
       const [pd, kd] = await Promise.all([
         fetchWeatherData('penang'),
         fetchWeatherData('kl')
@@ -918,7 +933,7 @@ async function renderWeather() {
 
   // Build the list of tabs to show
   let dayList;
-  if (tripMode) {
+  if (tripMode || SHARE_MODE) {
     dayList = TRIP_DAYS;
   } else {
     dayList = [0,1,2].map(offset => {
@@ -931,7 +946,13 @@ async function renderWeather() {
     wrap.appendChild(notice);
   }
 
-  const defaultDay = dayList.find(d => d.dateStr === todayStr) ?? dayList[1];
+  // Share mode: default to KL tab; otherwise default to today or day 1
+  let defaultDay;
+  if (SHARE_MODE) {
+    defaultDay = dayList.find(d => d.cityKey === 'kl') ?? dayList[0];
+  } else {
+    defaultDay = dayList.find(d => d.dateStr === todayStr) ?? dayList[1];
+  }
   let activeDate   = defaultDay.dateStr;
   let activeCityKey = defaultDay.cityKey;
 
