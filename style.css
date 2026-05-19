@@ -1167,9 +1167,11 @@ ul { list-style: none; }
 }
 
 /* ============================================================
-   Share mode: hide expenses tab & section
+   Share mode: hide expenses & accommodation tabs
    ============================================================ */
 [data-share] .nav-item[data-tab="expenses"],
-[data-share] #tab-expenses {
+[data-share] #tab-expenses,
+[data-share] .nav-item[data-tab="accommodation"],
+[data-share] #tab-accommodation {
   display: none !important;
 }

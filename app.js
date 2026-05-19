@@ -886,6 +886,22 @@ async function fetchWeatherData(cityKey) {
   return data;
 }
 
+// Share mode: fetch any custom date range (rolling 7-day window)
+async function fetchWeatherDataRange(cityKey, startDate, endDate) {
+  const cacheKey = `weather-${cityKey}-${startDate}-${endDate}-v1`;
+  const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+  if (cached && Date.now() - cached.ts < 3 * 60 * 60 * 1000) return cached.data;
+  const c = WEATHER_CITIES[cityKey];
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${c.lat}&longitude=${c.lon}`
+    + `&hourly=temperature_2m,apparent_temperature,precipitation_probability,weathercode,windspeed_10m,relativehumidity_2m`
+    + `&timezone=Asia%2FKuala_Lumpur&start_date=${startDate}&end_date=${endDate}`;
+  const r = await fetch(url);
+  if (!r.ok) throw new Error('weather fetch failed');
+  const data = await r.json();
+  localStorage.setItem(cacheKey, JSON.stringify({ ts: Date.now(), data }));
+  return data;
+}
+
 async function renderWeather() {
   const wrap = document.getElementById('weather-wrap');
   if (!wrap) return;
@@ -895,9 +911,32 @@ async function renderWeather() {
   const todayStr = new Date().toISOString().slice(0,10);
   const WD = ['日','一','二','三','四','五','六'];
 
+  // Share mode: build rolling 7-day list from today
+  let shareDayList = null;
+  if (SHARE_MODE) {
+    const today = new Date();
+    shareDayList = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(today.getTime() + i * 86400000);
+      const dateStr = d.toISOString().slice(0,10);
+      const mmdd = `${d.getMonth()+1}/${d.getDate()}`;
+      const tripDay = TRIP_DAYS.find(t => t.label === mmdd);
+      const cityKey = tripDay ? tripDay.cityKey : 'kl';
+      const label = i === 0 ? '今天' : mmdd;
+      return { dateStr, cityKey, label };
+    });
+  }
+
   let dataMap = {};
   try {
-    if (tripMode || SHARE_MODE) {
+    if (SHARE_MODE) {
+      const startDate = shareDayList[0].dateStr;
+      const endDate   = shareDayList[6].dateStr;
+      const [pd, kd] = await Promise.all([
+        fetchWeatherDataRange('penang', startDate, endDate),
+        fetchWeatherDataRange('kl', startDate, endDate)
+      ]);
+      dataMap = { penang: pd, kl: kd };
+    } else if (tripMode) {
       const [pd, kd] = await Promise.all([
         fetchWeatherData('penang'),
         fetchWeatherData('kl')
@@ -929,7 +968,9 @@ async function renderWeather() {
 
   // Build the list of tabs to show
   let dayList;
-  if (tripMode || SHARE_MODE) {
+  if (SHARE_MODE) {
+    dayList = shareDayList;
+  } else if (tripMode) {
     dayList = TRIP_DAYS;
   } else {
     dayList = [0,1,2].map(offset => {
@@ -942,7 +983,7 @@ async function renderWeather() {
     wrap.appendChild(notice);
   }
 
-  // Share mode: default to KL tab; otherwise default to today or day 1
+  // Default tab: share mode → first KL day; others → today or day 1
   let defaultDay;
   if (SHARE_MODE) {
     defaultDay = dayList.find(d => d.cityKey === 'kl') ?? dayList[0];
