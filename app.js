@@ -1247,6 +1247,7 @@ async function handleDeleteExpense(id) {
 function renderExpenses() {
   renderExpenseList();
   renderSettlement();
+  renderPerPersonSpend();
 }
 
 // Normalize expense date to "5/21" format regardless of how it was stored
@@ -1286,11 +1287,40 @@ function renderExpenseList() {
 
   const buildGroup = (date, label) => {
     if (!grouped[date]) return;
+
+    // Calculate day totals first
+    const dayTotals = { RM: 0, TWD: 0 };
+    grouped[date].forEach(exp => {
+      totals[exp.currency]    = (totals[exp.currency]    || 0) + exp.amount;
+      dayTotals[exp.currency] = (dayTotals[exp.currency] || 0) + exp.amount;
+    });
+    const dayTotalStr = [
+      dayTotals.RM  > 0 ? `RM ${dayTotals.RM.toFixed(2)}`  : '',
+      dayTotals.TWD > 0 ? `TWD ${dayTotals.TWD.toFixed(0)}` : ''
+    ].filter(Boolean).join(' + ');
+    const count = grouped[date].length;
+
     const grp = document.createElement('div');
     grp.className = 'expense-day-group';
-    grp.innerHTML = `<div class="expense-day-label">📅 ${label}</div>`;
+
+    // Collapsible header
+    const header = document.createElement('div');
+    header.className = 'expense-day-header';
+    header.innerHTML = `
+      <div class="expense-day-left">
+        <span class="expense-day-label">📅 ${label}</span>
+        <span class="expense-day-count">${count} 筆</span>
+      </div>
+      <div class="expense-day-right">
+        <span class="expense-day-total">${dayTotalStr}</span>
+        <span class="expense-day-chevron">⌄</span>
+      </div>`;
+
+    // Body (expanded by default)
+    const body = document.createElement('div');
+    body.className = 'expense-day-body';
+
     grouped[date].forEach(exp => {
-      totals[exp.currency] = (totals[exp.currency] || 0) + exp.amount;
       const isEditing = state.editingExpId === exp.id;
       const row = document.createElement('div');
       row.className = `expense-row${isEditing ? ' editing' : ''}`;
@@ -1308,8 +1338,16 @@ function renderExpenseList() {
       row.querySelector('.btn-delete-expense').addEventListener('click', () => {
         if (confirm(`確定刪除「${exp.desc}」？`)) handleDeleteExpense(exp.id);
       });
-      grp.appendChild(row);
+      body.appendChild(row);
     });
+
+    header.addEventListener('click', () => {
+      const collapsed = body.classList.toggle('collapsed');
+      header.querySelector('.expense-day-chevron').style.transform = collapsed ? '' : 'rotate(180deg)';
+    });
+
+    grp.appendChild(header);
+    grp.appendChild(body);
     daysEl.appendChild(grp);
   };
 
@@ -1398,4 +1436,60 @@ function renderSettlement() {
   if (!hasAny) {
     content.innerHTML = '<div class="settlement-all-clear">✅ 所有費用已平衡，無需轉帳！</div>';
   }
+}
+
+function renderPerPersonSpend() {
+  const content = document.getElementById('per-person-content');
+  if (!content) return;
+  content.innerHTML = '';
+
+  if (!state.expenses.length) return;
+
+  // Calculate each member's share per currency
+  const spend = {};
+  CONFIG.members.forEach(m => { spend[m] = { RM: 0, TWD: 0 }; });
+  state.expenses.forEach(exp => {
+    const share = exp.amount / exp.splitAmong.length;
+    exp.splitAmong.forEach(p => {
+      if (!spend[p]) spend[p] = { RM: 0, TWD: 0 };
+      spend[p][exp.currency] += share;
+    });
+  });
+
+  const table = document.createElement('table');
+  table.className = 'per-person-table';
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>成員</th>
+        <th>馬幣（RM）</th>
+        <th>台幣（TWD）</th>
+      </tr>
+    </thead>`;
+
+  const tbody = document.createElement('tbody');
+  CONFIG.members.forEach(m => {
+    const rm  = spend[m].RM;
+    const twd = spend[m].TWD;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="pp-name">${m}</td>
+      <td class="pp-amount">${rm  > 0.005 ? 'RM '  + rm.toFixed(2)       : '—'}</td>
+      <td class="pp-amount">${twd > 0.5   ? 'TWD ' + Math.round(twd)     : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  const totRM  = CONFIG.members.reduce((s, m) => s + spend[m].RM,  0);
+  const totTWD = CONFIG.members.reduce((s, m) => s + spend[m].TWD, 0);
+  const tfoot = document.createElement('tfoot');
+  tfoot.innerHTML = `
+    <tr class="pp-total-row">
+      <td>合計</td>
+      <td>${totRM  > 0.005 ? 'RM '  + totRM.toFixed(2)    : '—'}</td>
+      <td>${totTWD > 0.5   ? 'TWD ' + Math.round(totTWD)  : '—'}</td>
+    </tr>`;
+
+  table.appendChild(tbody);
+  table.appendChild(tfoot);
+  content.appendChild(table);
 }

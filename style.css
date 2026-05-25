@@ -817,13 +817,48 @@ ul { list-style: none; }
   font-weight: 700;
 }
 .expense-day-group { margin-bottom: 10px; }
+
+/* Collapsible day header */
+.expense-day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  margin-bottom: 6px;
+}
+.expense-day-left  { display: flex; align-items: center; gap: 6px; }
+.expense-day-right { display: flex; align-items: center; gap: 6px; }
 .expense-day-label {
   font-size: 12px;
   font-weight: 700;
   color: var(--text-3);
-  margin-bottom: 6px;
-  padding-left: 4px;
 }
+.expense-day-count {
+  font-size: 11px;
+  color: var(--text-3);
+  background: var(--bg);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+.expense-day-total {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.expense-day-chevron {
+  font-size: 16px;
+  color: var(--text-3);
+  transition: transform .2s;
+  line-height: 1;
+}
+.expense-day-body { display: flex; flex-direction: column; }
+.expense-day-body.collapsed { display: none; }
 .expense-row {
   background: var(--surface);
   border-radius: var(--radius-sm);
@@ -1174,4 +1209,50 @@ ul { list-style: none; }
 [data-share] .nav-item[data-tab="accommodation"],
 [data-share] #tab-accommodation {
   display: none !important;
+}
+
+/* ============================================================
+   個人花費總覽表格
+   ============================================================ */
+.per-person-wrap { padding: 0 16px 32px; }
+.per-person-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.per-person-table thead th {
+  background: var(--primary);
+  color: #fff;
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+}
+.per-person-table thead th:not(:first-child) { text-align: right; }
+.per-person-table tbody tr:nth-child(even) { background: var(--surface); }
+.per-person-table tbody tr:nth-child(odd)  { background: var(--bg); }
+.per-person-table tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pp-name   { font-weight: 600; color: var(--text); }
+.pp-amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-2);
+  font-size: 12px;
+}
+.per-person-table tfoot .pp-total-row td {
+  font-weight: 700;
+  color: var(--primary);
+  border-top: 2px solid var(--primary);
+  border-bottom: none;
+  padding: 10px 12px;
+  background: var(--surface);
+}
+.per-person-table tfoot .pp-total-row td:not(:first-child) {
+  text-align: right;
 }
