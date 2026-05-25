@@ -1256,3 +1256,34 @@ ul { list-style: none; }
 .per-person-table tfoot .pp-total-row td:not(:first-child) {
   text-align: right;
 }
+
+/* Expandable member rows */
+.pp-member-row { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.pp-member-row:active { opacity: .75; }
+.pp-chevron {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--text-3);
+  transition: transform .2s;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.pp-detail-row { background: var(--bg) !important; }
+.pp-detail-row.collapsed { display: none; }
+.pp-detail-td { padding: 0 !important; border-bottom: 1px solid var(--border); }
+.pp-detail-list {
+  padding: 8px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.pp-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.pp-detail-date  { color: var(--text-3); flex-shrink: 0; width: 32px; }
+.pp-detail-desc  { flex: 1; color: var(--text-2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pp-detail-share { color: var(--primary); font-weight: 700; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+.pp-detail-empty { font-size: 11px; color: var(--text-3); text-align: center; padding: 4px 0; }

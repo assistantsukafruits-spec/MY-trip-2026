@@ -1456,6 +1456,8 @@ function renderPerPersonSpend() {
     });
   });
 
+  const DATE_ORDER = ['5/20','5/21','5/22','5/23','5/24'];
+
   const table = document.createElement('table');
   table.className = 'per-person-table';
   table.innerHTML = `
@@ -1468,15 +1470,65 @@ function renderPerPersonSpend() {
     </thead>`;
 
   const tbody = document.createElement('tbody');
+
   CONFIG.members.forEach(m => {
     const rm  = spend[m].RM;
     const twd = spend[m].TWD;
+
+    // Summary row (clickable)
     const tr = document.createElement('tr');
+    tr.className = 'pp-member-row';
     tr.innerHTML = `
-      <td class="pp-name">${m}</td>
-      <td class="pp-amount">${rm  > 0.005 ? 'RM '  + rm.toFixed(2)       : '—'}</td>
-      <td class="pp-amount">${twd > 0.5   ? 'TWD ' + Math.round(twd)     : '—'}</td>`;
+      <td class="pp-name"><span class="pp-chevron">⌄</span>${m}</td>
+      <td class="pp-amount">${rm  > 0.005 ? 'RM '  + rm.toFixed(2)   : '—'}</td>
+      <td class="pp-amount">${twd > 0.5   ? 'TWD ' + Math.round(twd) : '—'}</td>`;
+
+    // Detail row (collapsed by default)
+    const detailTr = document.createElement('tr');
+    detailTr.className = 'pp-detail-row collapsed';
+    const detailTd = document.createElement('td');
+    detailTd.colSpan = 3;
+    detailTd.className = 'pp-detail-td';
+
+    const detailList = document.createElement('div');
+    detailList.className = 'pp-detail-list';
+
+    const memberExps = state.expenses
+      .filter(exp => exp.splitAmong.includes(m))
+      .sort((a, b) => {
+        const ai = DATE_ORDER.indexOf(normalizeExpDate(a.date));
+        const bi = DATE_ORDER.indexOf(normalizeExpDate(b.date));
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+      });
+
+    if (memberExps.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'pp-detail-empty';
+      empty.textContent = '尚無費用';
+      detailList.appendChild(empty);
+    } else {
+      memberExps.forEach(exp => {
+        const share = exp.amount / exp.splitAmong.length;
+        const item = document.createElement('div');
+        item.className = 'pp-detail-item';
+        item.innerHTML = `
+          <span class="pp-detail-date">${normalizeExpDate(exp.date)}</span>
+          <span class="pp-detail-desc">${exp.desc}</span>
+          <span class="pp-detail-share">${exp.currency} ${share.toFixed(2)}</span>`;
+        detailList.appendChild(item);
+      });
+    }
+
+    detailTd.appendChild(detailList);
+    detailTr.appendChild(detailTd);
+
+    tr.addEventListener('click', () => {
+      const collapsed = detailTr.classList.toggle('collapsed');
+      tr.querySelector('.pp-chevron').style.transform = collapsed ? '' : 'rotate(180deg)';
+    });
+
     tbody.appendChild(tr);
+    tbody.appendChild(detailTr);
   });
 
   const totRM  = CONFIG.members.reduce((s, m) => s + spend[m].RM,  0);
@@ -1485,8 +1537,8 @@ function renderPerPersonSpend() {
   tfoot.innerHTML = `
     <tr class="pp-total-row">
       <td>合計</td>
-      <td>${totRM  > 0.005 ? 'RM '  + totRM.toFixed(2)    : '—'}</td>
-      <td>${totTWD > 0.5   ? 'TWD ' + Math.round(totTWD)  : '—'}</td>
+      <td>${totRM  > 0.005 ? 'RM '  + totRM.toFixed(2)   : '—'}</td>
+      <td>${totTWD > 0.5   ? 'TWD ' + Math.round(totTWD) : '—'}</td>
     </tr>`;
 
   table.appendChild(tbody);
