@@ -1313,12 +1313,12 @@ function renderExpenseList() {
       </div>
       <div class="expense-day-right">
         <span class="expense-day-total">${dayTotalStr}</span>
-        <span class="expense-day-chevron">⌄</span>
+        <span class="expense-day-chevron" style="transform:rotate(-90deg)">⌄</span>
       </div>`;
 
-    // Body (expanded by default)
+    // Body (collapsed by default)
     const body = document.createElement('div');
-    body.className = 'expense-day-body';
+    body.className = 'expense-day-body collapsed';
 
     grouped[date].forEach(exp => {
       const isEditing = state.editingExpId === exp.id;
@@ -1343,7 +1343,7 @@ function renderExpenseList() {
 
     header.addEventListener('click', () => {
       const collapsed = body.classList.toggle('collapsed');
-      header.querySelector('.expense-day-chevron').style.transform = collapsed ? '' : 'rotate(180deg)';
+      header.querySelector('.expense-day-chevron').style.transform = collapsed ? 'rotate(-90deg)' : 'rotate(0deg)';
     });
 
     grp.appendChild(header);
